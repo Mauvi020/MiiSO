@@ -67,8 +67,7 @@
           "arch": ["x64"]
         }
       ],
-      "artifactName": "MiiSO-Setup-${version}.${ext}",
-            "icon": "assets/icon.png"
+      "icon": "assets/icon.ico"
     },
     "nsis": {
       "oneClick": false,
@@ -76,8 +75,8 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "MiiSO",
-            "installerIcon": "assets/icon.png",
-      "uninstallerIcon": "assets/icon.png",
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
       "license": "LICENSE"
     },
     "portable": {
