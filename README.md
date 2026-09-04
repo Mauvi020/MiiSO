@@ -1,0 +1,107 @@
+# MiiSO
+
+A desktop game launcher inspired by iiSU (Android) and Xbox Game Bar.
+Features: game library, folders, file browser, system monitor,
+audio control, screenshots, and Discord Rich Presence.
+
+**No server required — runs 100% locally on your PC.**
+
+## Features
+
+- 🎮 **Game Library** — Add, organize, and launch your games
+- 📁 **Folders** — Group games into custom folders
+- 📂 **File Browser** — Browse and open files on your system
+- 📊 **System Monitor** — Live CPU/RAM usage (like Xbox Game Bar)
+- 🔊 **Audio Control** — Master volume + per-app volume mixer
+- 📸 **Screenshot Tool** — Capture and view screenshots
+- 🤖 **Discord Rich Presence** — Show what you're playing (serverless, no OAuth server)
+
+## Download
+
+Get the latest release from the [Releases](https://github.com/Mauvi020/MiiSO/releases) page:
+
+- **MiiSO-Setup-x.x.x.exe** — Installer (recommended)
+- **MiiSO-Portable-x.x.x.exe** — Portable version (no installation needed)
+
+## Getting Started (Development)
+
+```bash
+# Clone the repository
+git clone https://github.com/Mauvi020/MiiSO.git
+cd MiiSO
+
+# Install dependencies
+npm install
+
+# Run in development mode
+npm run dev
+
+# Build for production
+npm run build
+
+# Type check
+npm run typecheck
+```
+
+## Creating an Installer
+
+```bash
+# Build and create installer (.exe)
+npm run dist
+```
+
+Output files will be in the `release/` directory:
+- `MiiSO-Setup-x.x.x.exe` — NSIS installer
+- `MiiSO-Portable-x.x.x.exe` — Portable executable
+
+### Custom Icon
+
+Place an `icon.ico` file (256x256, multi-size) in the `assets/` directory before building.
+See `assets/README.md` for details.
+
+## Discord Setup (Optional)
+
+1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
+2. Create a new application
+3. Copy the Client ID
+4. Paste it in MiiSO Settings → Discord
+
+No redirect URI or OAuth server needed! The app uses Discord Rich Presence directly.
+
+## Tech Stack
+
+- **Electron** + **electron-vite** — Desktop app framework
+- **React 18** + **TypeScript** — UI
+- **Tailwind CSS** — Styling
+- **Zustand** — State management
+- **systeminformation** — System stats
+- **electron-store** — Persistent settings
+- **electron-builder** — Installer creation
+
+## GitHub Actions
+
+This repo includes a GitHub Actions workflow that automatically builds and publishes
+a new release when you push a version tag:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The workflow will:
+1. Install dependencies
+2. Type-check the code
+3. Build the app
+4. Create installer + portable executables
+5. Publish a GitHub Release with the artifacts
+
+## Info
+
+Contact: support.mauvi@gmail.com
+
+Website: info.mauvi.de
+
+## License
+
+MIT
+
