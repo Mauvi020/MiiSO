@@ -26,6 +26,10 @@ interface ElectronAPI {
   getPathInfo: (filePath: string) => Promise<any>;
   getSystemDriveRoots: () => Promise<any[]>;
 
+  // Dialogs (file pickers)
+  openFileDialog: () => Promise<string | null>;
+  openDirectoryDialog: () => Promise<string | null>;
+
   // System
   getSystemInfo: () => Promise<any>;
   getSystemStats: () => Promise<any>;

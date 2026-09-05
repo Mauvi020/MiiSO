@@ -5,7 +5,7 @@
  * Central module that registers all ipcMain.handle listeners
  * used by the renderer through window.electronAPI.
  */
-import { ipcMain, BrowserWindow } from 'electron';
+import { ipcMain, BrowserWindow, dialog } from 'electron';
 import { app } from 'electron';
 import si from 'systeminformation';
 
@@ -57,6 +57,31 @@ export function registerIpcHandlers(): void {
   ipcMain.handle('app:path', async () => app.getPath('userData'));
   ipcMain.handle('app:open-path', openPath);
   ipcMain.handle('app:relaunch', async () => app.relaunch());
+
+  // --- File dialogs (for picking executables / directories) ---
+  ipcMain.handle('dialog:open-file', async () => {
+    const win = BrowserWindow.getFocusedWindow();
+    const result = await dialog.showOpenDialog(win!, {
+      title: 'Select Game Executable',
+      properties: ['openFile'],
+      filters: [
+        { name: 'Executables', extensions: ['exe', 'bat', 'cmd'] },
+        { name: 'All Files', extensions: ['*'] },
+      ],
+    });
+    if (result.canceled || result.filePaths.length === 0) return null;
+    return result.filePaths[0];
+  });
+
+  ipcMain.handle('dialog:open-directory', async () => {
+    const win = BrowserWindow.getFocusedWindow();
+    const result = await dialog.showOpenDialog(win!, {
+      title: 'Select Game Directory',
+      properties: ['openDirectory'],
+    });
+    if (result.canceled || result.filePaths.length === 0) return null;
+    return result.filePaths[0];
+  });
 
   // --- Games ---
   ipcMain.handle('games:get', getGames);

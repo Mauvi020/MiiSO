@@ -29,11 +29,11 @@ export default function FolderCard({ folder }: { folder: GameFolder }) {
 
   return (
     <div
-            className={clsx(
-        'group relative rounded-xl border transition-all duration-200 cursor-pointer',
+      className={clsx(
+        'group relative rounded-2xl border transition-all duration-200 cursor-pointer',
         isOpen
-          ? 'bg-[#1e293b] border-[#0ea5e9]/50 shadow-lg shadow-[#0ea5e9]/5'
-          : 'bg-[#181f29] border-[#334155] hover:border-[#0ea5e9]/30 hover:shadow-[#0ea5e9]/5'
+          ? 'bg-[#1a2235] border-[#6366f1]/50 shadow-lg shadow-[#6366f1]/10'
+          : 'bg-[#111827] border-[#1e293b] hover:border-[#6366f1]/30'
       )}
       onClick={() => setSelectedFolder(isOpen ? null : folder.id)}
     >

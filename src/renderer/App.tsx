@@ -31,7 +31,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="flex h-screen bg-[#0f172a] text-[#e2e8f0] overflow-hidden">
+    <div className="flex h-screen bg-[#0a0e17] text-[#f1f5f9] overflow-hidden">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Topbar />

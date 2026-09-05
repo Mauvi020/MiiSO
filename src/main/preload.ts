@@ -40,6 +40,10 @@ const api = {
   getPathInfo: (p: string): Promise<unknown> => ipcRenderer.invoke('files:info', p),
   getSystemDriveRoots: (): Promise<unknown> => ipcRenderer.invoke('files:roots'),
 
+  // Dialogs (file pickers)
+  openFileDialog: (): Promise<string | null> => ipcRenderer.invoke('dialog:open-file'),
+  openDirectoryDialog: (): Promise<string | null> => ipcRenderer.invoke('dialog:open-directory'),
+
   // System
   getSystemInfo: (): Promise<unknown> => ipcRenderer.invoke('system:info'),
   getSystemStats: (): Promise<unknown> => ipcRenderer.invoke('system:stats'),

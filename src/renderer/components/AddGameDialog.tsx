@@ -1,5 +1,5 @@
 /**
- * MiiSO - PC Game Hub — Add game dialog.
+ * MiiSO - PC Game Hub — Add game dialog with file picker.
  */
 import React, { useState } from 'react';
 import { useStore } from '@/stores/appStore';
@@ -15,17 +15,39 @@ export default function AddGameDialog({ onAdd, children }: AddGameDialogProps) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [exePath, setExePath] = useState('');
+  const [installDir, setInstallDir] = useState('');
   const [platform, setPlatform] = useState('manual');
   const [launchOptions, setLaunchOptions] = useState('');
   const [tags, setTags] = useState('');
+  const [busy, setBusy] = useState(false);
 
-  const handleBrowse = async () => {
+  const handleBrowseExe = async () => {
+    setBusy(true);
     try {
-      const result = await window.electronAPI.openPath(''); // opens file dialog? No...
-      // Electron openPath opens a file, not a dialog
-      // We'd need an IPC for dialog.showOpenDialog
-      // For now, let the user paste the path
+      const result = await window.electronAPI.openFileDialog();
+      if (result) {
+        setExePath(result);
+        if (!name) {
+          const parts = result.split(/[/\\]/);
+          const fileName = parts[parts.length - 1];
+          setName(fileName.replace(/\.(exe|bat|cmd)$/i, ''));
+        }
+        if (!installDir) {
+          const lastSlash = result.lastIndexOf('\\');
+          if (lastSlash > 0) setInstallDir(result.substring(0, lastSlash));
+        }
+      }
     } catch { /* ignore */ }
+    setBusy(false);
+  };
+
+  const handleBrowseDir = async () => {
+    setBusy(true);
+    try {
+      const result = await window.electronAPI.openDirectoryDialog();
+      if (result) setInstallDir(result);
+    } catch { /* ignore */ }
+    setBusy(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -49,6 +71,7 @@ export default function AddGameDialog({ onAdd, children }: AddGameDialogProps) {
   const resetForm = () => {
     setName('');
     setExePath('');
+    setInstallDir('');
     setPlatform('manual');
     setLaunchOptions('');
     setTags('');
@@ -58,28 +81,18 @@ export default function AddGameDialog({ onAdd, children }: AddGameDialogProps) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className={clsx('btn btn-ghost text-sm', 'border-[#0ea5e9]/30 text-[#0ea5e9] hover:bg-[#0ea5e9]/10')}
+        className={clsx('btn btn-ghost text-sm', 'border-[#6366f1]/30 text-[#6366f1] hover:bg-[#6366f1]/10')}
       >
         {children || '+ Add Game'}
       </button>
 
       {open && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-[#181f29] border border-[#334155] rounded-xl p-6 w-full max-w-md mx-4">
-            <h2 className="text-xl font-bold text-[#e2e8f0] mb-4">Add Game</h2>
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-[#111827] border border-[#1e293b] rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl">
+            <h2 className="text-xl font-bold gradient-text mb-5">Add Game</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="text-sm text-[#94a3b8] mb-1 block">Game Name</label>
-                <input
-                  type="text" className="input w-full"
-                  value={name} onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Cyberpunk 2077"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="text-sm text-[#94a3b8] mb-1 block">Executable Path</label>
+                <label className="text-sm text-[#94a3b8] mb-1.5 block">Game Executable *</label>
                 <div className="flex gap-2">
                   <input
                     type="text" className="input flex-1"
@@ -89,17 +102,47 @@ export default function AddGameDialog({ onAdd, children }: AddGameDialogProps) {
                   />
                   <button
                     type="button"
-                    onClick={handleBrowse}
-                    className="btn btn-ghost text-sm px-3"
-                    title="Browse (paste path manually for now)"
+                    onClick={handleBrowseExe}
+                    disabled={busy}
+                    className="btn btn-ghost text-sm px-4 disabled:opacity-50"
+                    title="Browse for executable"
                   >
-                    ⋯
+                    {busy ? '…' : '📂'}
                   </button>
                 </div>
               </div>
 
               <div>
-                <label className="text-sm text-[#94a3b8] mb-1 block">Platform</label>
+                <label className="text-sm text-[#94a3b8] mb-1.5 block">Game Name</label>
+                <input
+                  type="text" className="input w-full"
+                  value={name} onChange={(e) => setName(e.target.value)}
+                  placeholder="e.g. Cyberpunk 2077"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm text-[#94a3b8] mb-1.5 block">Install Directory (optional)</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text" className="input flex-1"
+                    value={installDir} onChange={(e) => setInstallDir(e.target.value)}
+                    placeholder="C:\Games\Game"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleBrowseDir}
+                    disabled={busy}
+                    className="btn btn-ghost text-sm px-4 disabled:opacity-50"
+                    title="Browse for directory"
+                  >
+                    📁
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm text-[#94a3b8] mb-1.5 block">Platform</label>
                 <select
                   className="input w-full"
                   value={platform} onChange={(e) => setPlatform(e.target.value)}
@@ -116,7 +159,7 @@ export default function AddGameDialog({ onAdd, children }: AddGameDialogProps) {
               </div>
 
               <div>
-                <label className="text-sm text-[#94a3b8] mb-1 block">Launch Options</label>
+                <label className="text-sm text-[#94a3b8] mb-1.5 block">Launch Options (optional)</label>
                 <input
                   type="text" className="input w-full"
                   value={launchOptions} onChange={(e) => setLaunchOptions(e.target.value)}
@@ -125,7 +168,7 @@ export default function AddGameDialog({ onAdd, children }: AddGameDialogProps) {
               </div>
 
               <div>
-                <label className="text-sm text-[#94a3b8] mb-1 block">Tags (comma separated)</label>
+                <label className="text-sm text-[#94a3b8] mb-1.5 block">Tags (comma separated)</label>
                 <input
                   type="text" className="input w-full"
                   value={tags} onChange={(e) => setTags(e.target.value)}
@@ -133,7 +176,7 @@ export default function AddGameDialog({ onAdd, children }: AddGameDialogProps) {
                 />
               </div>
 
-              <div className="flex gap-3 pt-2">
+              <div className="flex gap-3 pt-3">
                 <button type="submit" className="btn btn-primary flex-1">Add Game</button>
                 <button
                   type="button"
