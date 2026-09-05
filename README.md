@@ -1,10 +1,12 @@
 # MiiSO
 
-A desktop game launcher inspired by iiSU (Android) and Xbox Game Bar.
+A desktop game launcher inspired by [iiSU](https://iisu.network/) (Android) and Xbox Game Bar.
 Features: game library, folders, file browser, system monitor,
 audio control, screenshots, and Discord Rich Presence.
 
 **No server required — runs 100% locally on your PC.**
+
+![MiiSO](https://img.shields.io/badge/MiiSO-PC%20%20Game%20Hub-6366f1?style=for-the-badge)
 
 ## Features
 
@@ -15,6 +17,11 @@ audio control, screenshots, and Discord Rich Presence.
 - 🔊 **Audio Control** — Master volume + per-app volume mixer
 - 📸 **Screenshot Tool** — Capture and view screenshots
 - 🤖 **Discord Rich Presence** — Show what you're playing (serverless, no OAuth server)
+
+## Screenshots
+
+MiiSU-inspired dark cinematic UI with gradient accents, glass morphism,
+and game-art focused design.
 
 ## Download
 
@@ -72,7 +79,7 @@ No redirect URI or OAuth server needed! The app uses Discord Rich Presence direc
 
 - **Electron** + **electron-vite** — Desktop app framework
 - **React 18** + **TypeScript** — UI
-- **Tailwind CSS** — Styling
+- **Tailwind CSS** — Styling (iiSU-inspired dark cinematic theme)
 - **Zustand** — State management
 - **systeminformation** — System stats
 - **electron-store** — Persistent settings
