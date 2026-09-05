@@ -14,7 +14,7 @@ const isWin = process.platform === 'win32';
 
 // ─── Audio Devices ───────────────────────────────────────────────────────
 
-export async function getAudioDevices(): Promise<AudioDevice[]> {
+export async function getAudioDevices(_?: unknown): Promise<AudioDevice[]> {
   const audio = await si.audio().catch(() => [] as any);
   const devices: AudioDevice[] = [];
 
@@ -108,7 +108,7 @@ export async function toggleMasterMute(_: unknown, muted: boolean): Promise<{ su
 
 // ─── Per-App Volume ───────────────────────────────────────────────────────
 
-export async function getProcessVolumes(): Promise<AppVolumeInfo[]> {
+export async function getProcessVolumes(_?: unknown): Promise<AppVolumeInfo[]> {
   const processes = await si.processes().catch(() => ({ processes: [] as any[] }));
   const procMap: Record<number, string> = {};
   for (const p of (processes as any).processes || []) {

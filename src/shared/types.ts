@@ -14,6 +14,7 @@ export interface Game {
   executablePath: string;
   installDir?: string;
   iconPath?: string;
+  coverImage?: string;
   platform: Platform;
   size?: number;
   lastPlayed?: number;

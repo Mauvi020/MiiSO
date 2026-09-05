@@ -8,7 +8,7 @@
 import si from 'systeminformation';
 import type { SystemStats, SystemInfo } from '@shared/types';
 
-export async function getSystemInfo(): Promise<SystemInfo> {
+export async function getSystemInfo(_?: unknown): Promise<SystemInfo> {
   const [cpu, mem, disk, gpu, os] = await Promise.all([
     si.cpu(),
     si.mem(),
@@ -53,7 +53,7 @@ export async function getSystemInfo(): Promise<SystemInfo> {
   };
 }
 
-export async function getSystemStats(): Promise<SystemStats> {
+export async function getSystemStats(_?: unknown): Promise<SystemStats> {
   const [cpu, mem, disk, gpu, net] = await Promise.all([
     si.cpu(),
     si.mem(),

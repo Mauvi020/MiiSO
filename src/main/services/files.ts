@@ -7,6 +7,7 @@
 import fs from 'fs/promises';
 import fsSync from 'fs';
 import path from 'path';
+import os from 'os';
 import { shell } from 'electron';
 import type { FileItem } from '@shared/types';
 
@@ -88,7 +89,7 @@ export async function showInFolder(_: unknown, target: string): Promise<{ succes
 
 export async function getRootDirectories(): Promise<FileItem[]> {
   const { platform } = process;
-  const homedir = require('os').homedir();
+  const homedir = os.homedir();
   const roots: FileItem[] = [];
 
   if (platform === 'win32') {

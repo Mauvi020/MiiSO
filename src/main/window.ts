@@ -17,7 +17,7 @@ export function createMainWindow(): BrowserWindow {
     minWidth: 940,
     minHeight: 600,
     show: false,
-    backgroundColor: '#0f172a',
+    backgroundColor: '#0a0e17',
     autoHideMenuBar: true,
     title: 'MiiSO',
     webPreferences: {

@@ -67,7 +67,7 @@ export async function captureScreenshot(_: unknown, fullScreen?: boolean): Promi
   }
 }
 
-export async function listScreenshots(): Promise<ScreenshotData[]> {
+export async function listScreenshots(_?: unknown): Promise<ScreenshotData[]> {
   await ensureDir();
   try {
     const entries = await fs.readdir(SCREENSHOT_DIR);

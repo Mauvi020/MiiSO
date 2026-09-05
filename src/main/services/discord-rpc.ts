@@ -4,7 +4,7 @@
  * Uses Discord IPC for game activity display — no OAuth or local HTTP server required.
  * Users can set their own Discord application client ID in Settings.
  */
-import { ipcMain, BrowserWindow } from 'electron';
+import { BrowserWindow } from 'electron';
 import type { DiscordUser } from '@shared/types';
 import { getSettings } from './settings';
 
@@ -15,7 +15,7 @@ let discordUser: DiscordUser | null = null;
  * Connect to Discord via Rich Presence (IPC transport).
  * This does NOT require a browser or local HTTP server.
  */
-export async function loginDiscord(): Promise<{ success: boolean; message: string }> {
+export async function loginDiscord(_?: unknown): Promise<{ success: boolean; message: string }> {
   try {
     const settings = await getSettings();
     const clientId = (settings as any).discordClientId;
@@ -49,13 +49,13 @@ export async function loginDiscord(): Promise<{ success: boolean; message: strin
   }
 }
 
-export async function logoutDiscord(): Promise<{ success: boolean }> {
+export async function logoutDiscord(_?: unknown): Promise<{ success: boolean }> {
   connected = false;
   discordUser = null;
   return { success: true };
 }
 
-export async function getDiscordUser(): Promise<DiscordUser | null> {
+export async function getDiscordUser(_?: unknown): Promise<DiscordUser | null> {
   return discordUser;
 }
 
