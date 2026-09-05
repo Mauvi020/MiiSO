@@ -11,7 +11,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean
       onClick={() => onChange(!checked)}
       className={clsx(
         'relative w-11 h-6 rounded-full transition-colors shrink-0',
-        checked ? 'bg-[#0ea5e9]' : 'bg-[#334155]'
+        checked ? 'bg-[#6366f1]' : 'bg-[#1e293b]'
       )}
     >
       <span
@@ -27,7 +27,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="card">
-      <h2 className="text-lg font-medium text-[#e2e8f0] mb-3">{title}</h2>
+      <h2 className="text-lg font-medium text-[#f1f5f9] mb-4">{title}</h2>
       {children}
     </div>
   );
@@ -42,7 +42,7 @@ export default function Settings() {
 
   return (
     <div className="p-6 space-y-6 max-w-3xl">
-      <h1 className="text-2xl font-bold text-[#e2e8f0]">Settings</h1>
+      <h1 className="text-2xl font-bold text-[#f1f5f9]">Settings</h1>
 
       {/* Appearance */}
       <Section title="Appearance">
@@ -118,7 +118,7 @@ export default function Settings() {
                 max="100"
                 value={settings.screenshotQuality}
                 onChange={(e) => saveSettings({ screenshotQuality: Number(e.target.value) })}
-                className="w-40"
+                className="w-40 accent-[#6366f1]"
               />
               <span className="text-sm text-[#94a3b8] w-10 text-right">{settings.screenshotQuality}%</span>
             </div>
@@ -129,6 +129,7 @@ export default function Settings() {
       {/* About */}
       <Section title="About">
         <p className="text-sm text-[#64748b]">MiiSO v0.1.0 — PC Game Hub</p>
+        <p className="text-xs text-[#475569] mt-1">Inspired by iiSU and Xbox Game Bar</p>
       </Section>
     </div>
   );
