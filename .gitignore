@@ -28,6 +28,10 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
+dist_build.log
+tc*.txt
+tsc*.txt
 
 # Env
 .env

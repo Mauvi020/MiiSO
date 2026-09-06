@@ -1,5 +1,6 @@
-﻿/**
- * MiiSO - PC Game Hub â€” Library page.
+/**
+ * MiiSO - PC Game Hub
+ * Library page.
  */
 import React, { useEffect } from 'react';
 import { useStore } from '@/stores/appStore';
@@ -8,36 +9,30 @@ import AddGameDialog from '@/components/AddGameDialog';
 import CreateFolderDialog from '@/components/CreateFolderDialog';
 
 export default function Library() {
-  const { searchQuery, setSearchQuery, loadGames, scanGames, games, folders, loadFolders } = useStore();
+  const { loadGames, loadFolders, scanGames, searchQuery, setSearchQuery, createFolder } = useStore();
 
   useEffect(() => {
     loadGames();
     loadFolders();
   }, []);
 
-  const filteredCount = games.filter((g) =>
-    g.name.toLowerCase().includes(searchQuery.toLowerCase())
-  ).length;
-
   return (
     <div className="h-full flex flex-col">
-      {/* Header with search */}
-      <div className="p-4 border-b border-[#334155]">
-        <div className="flex items-center justify-between mb-3">
+      <div className="p-5 border-b border-[#1e293b]">
+        <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold text-[#e2e8f0]">Game Library</h1>
           <div className="flex items-center gap-2">
+            <CreateFolderDialog onCreate={createFolder} />
+            <AddGameDialog onAdd={() => {}} />
             <button
-              onClick={scanGames}
+              onClick={() => scanGames()}
               className="btn btn-ghost text-sm"
               title="Scan for installed games"
             >
-              ðŸ” Scan
+              🔍 Scan
             </button>
-            <CreateFolderDialog onCreate={useStore.getState().createFolder} />
-            <AddGameDialog onAdd={() => {}} />
           </div>
         </div>
-
         <div className="relative">
           <input
             type="text"
@@ -46,19 +41,13 @@ export default function Library() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#64748b]">ðŸ”</span>
-          {searchQuery && (
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#64748b]">
-              {filteredCount} found
-            </span>
-          )}
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#475569]">🔍</span>
         </div>
       </div>
-
-      {/* Game grid */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto p-5">
         <GameGrid />
       </div>
     </div>
   );
 }
+

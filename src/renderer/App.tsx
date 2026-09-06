@@ -30,7 +30,7 @@ export default function App() {
     init();
   }, []);
 
-  return (
+    return (
     <div className="flex h-screen bg-[#0a0e17] text-[#f1f5f9] overflow-hidden">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">

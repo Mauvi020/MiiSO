@@ -1,12 +1,11 @@
 /**
- * MiiSO - PC Game Hub — Game grid component.
+ * MiiSO - PC Game Hub
+ * Game grid component.
  */
 import React, { useMemo } from 'react';
 import { useStore } from '@/stores/appStore';
 import GameCard from '@/components/GameCard';
 import FolderCard from '@/components/FolderCard';
-import AddGameDialog from '@/components/AddGameDialog';
-import CreateFolderDialog from '@/components/CreateFolderDialog';
 import type { Game, GameFolder } from '@shared/types';
 
 export default function GameGrid() {
@@ -34,36 +33,18 @@ export default function GameGrid() {
   const showFolders = !selectedFolderId && !searchQuery;
 
   return (
-    <div className="p-6">
-      {/* Toolbar */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-[#e2e8f0]">Game Library</h1>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => {}}
-            className="btn btn-ghost text-sm"
-            title="Scan for games"
-          >
-            🔍 Scan
-          </button>
-          <CreateFolderDialog onCreate={createFolder} />
-          <AddGameDialog onAdd={() => {}} />
-        </div>
-      </div>
-
-      {/* Search / Folder breadcrumb */}
+    <div>
       {selectedFolderId && (
         <div className="mb-4">
           <button
             onClick={() => setSelectedFolder(null)}
-            className="text-sm text-[#0ea5e9] hover:underline"
+            className="text-sm text-[#6366f1] hover:underline"
           >
-            ← Back to all games
+            Back to all games
           </button>
         </div>
       )}
 
-      {/* Folders */}
       {showFolders && folders.length > 0 && (
         <div className="mb-8">
           <h2 className="text-sm font-medium text-[#64748b] mb-3 uppercase tracking-wider">Folders</h2>
@@ -75,7 +56,6 @@ export default function GameGrid() {
         </div>
       )}
 
-      {/* Favorites */}
       {!selectedFolderId && !searchQuery && favoriteGames.length > 0 && (
         <div className="mb-8">
           <h2 className="text-sm font-medium text-[#64748b] mb-3 uppercase tracking-wider">Favorites</h2>
@@ -87,14 +67,13 @@ export default function GameGrid() {
         </div>
       )}
 
-      {/* All games */}
-      <div>
-        <h2 className="text-sm font-medium text-[#64748b] mb-3 uppercase tracking-wider">
+            <div>
+        <h2 className="text-sm font-medium text-[#64748b] uppercase tracking-wider">
           {selectedFolderId ? 'Folder games' : searchQuery ? 'Search results' : 'All games'}
         </h2>
         {displayGames.length === 0 ? (
-          <div className="text-center py-12 text-[#64748b]">
-            <span className="text-4xl mb-4 block">🎮</span>
+          <div className="text-center py-16 text-[#64748b]">
+            <span className="text-5xl mb-4 block">🎮</span>
             <p className="text-lg mb-2">No games found</p>
             <p className="text-sm">
               {searchQuery ? 'Try a different search term' : 'Add games or scan for installed games'}

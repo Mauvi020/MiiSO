@@ -12,7 +12,8 @@
     "build": "electron-vite build",
     "preview": "electron-vite preview",
     "typecheck": "tsc --noEmit",
-    "dist": "electron-vite build && electron-builder --win"
+    "fix:builder-cache": "powershell -ExecutionPolicy Bypass -File scripts/fix-builder-cache.ps1",
+    "dist": "electron-vite build && npm run fix:builder-cache && electron-builder --win"
   },
   "dependencies": {
     "clsx": "^2.1.1",

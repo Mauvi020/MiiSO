@@ -57,9 +57,27 @@ npm run typecheck
 npm run dist
 ```
 
+`npm run dist` automatically pre-populates the electron-builder tool cache
+(see below), so no admin rights are needed to build.
+
 Output files will be in the `release/` directory:
 - `MiiSO-Setup-x.x.x.exe` — NSIS installer
 - `MiiSO-Portable-x.x.x.exe` — Portable executable
+
+### Windows "Cannot create symbolic link" during build?
+
+electron-builder extracts its `winCodeSign` tools archive into
+`%LOCALAPPDATA%\electron-builder\Cache`. That archive contains macOS symlinks,
+and 7-Zip needs Admin rights to create them — which fails on non-admin shells.
+
+`npm run dist` runs `scripts\fix-builder-cache.ps1` first. It pre-extracts the
+archive (skipping the irrelevant `darwin` folder) into the exact cache path
+app-builder checks:
+
+```bash
+# Run manually if you cleared the cache
+npm run fix:builder-cache
+```
 
 ### Custom Icon
 

@@ -15,6 +15,7 @@ export type View = 'library' | 'files' | 'tools' | 'settings';
 const DEFAULT_SETTINGS: Settings = {
   theme: 'dark', gameDirs: [], showSystemStats: true, overlayEnabled: true,
   screenshotFormat: 'png', screenshotQuality: 90, autoScan: true, discordEnabled: false,
+  discordClientId: '',
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
