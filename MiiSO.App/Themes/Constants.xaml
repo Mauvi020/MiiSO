@@ -89,10 +89,7 @@
     <!--  Fonts (gebündelt in /Assets/Fonts)                                 -->
     <!-- ================================================================== -->
     <FontFamily x:Key="FontConsoleSans">pack://application:,,,/Assets/Fonts/console_sans_regular.otf#Console Sans</FontFamily>
-    <FontFamily x:Key="FontConsoleMedium">pack://application:,,,/Assets/Fonts/console_sans_medium.otf#Console Sans Medium</FontFamily>
-    <FontFamily x:Key="FontConsoleSemibold">pack://application:,,,/Assets/Fonts/console_sans_semibold.otf#Console Sans Semibold</FontFamily>
     <FontFamily x:Key="FontConsoleBold">pack://application:,,,/Assets/Fonts/console_sans_bold.otf#Console Sans Bold</FontFamily>
-    <FontFamily x:Key="FontConsoleExtraBold">pack://application:,,,/Assets/Fonts/console_sans_extrabold.otf#Console Sans Extrabold</FontFamily>
     <FontFamily x:Key="FontIisu">pack://application:,,,/Assets/Fonts/iisu_arctainium.ttf#Arctainium</FontFamily>
     <FontFamily x:Key="FontGameNum">pack://application:,,,/Assets/Fonts/gamenum_regular.otf#Gamenum</FontFamily>
     <FontFamily x:Key="FontGameMaster">pack://application:,,,/Assets/Fonts/gamemaster_regular.otf#Gamemaster</FontFamily>
