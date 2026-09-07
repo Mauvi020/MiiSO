@@ -1,0 +1,239 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ================================================================== -->
+    <!--  MiiSO - Controls, Buttons und Kacheln (iiSU-Stil)                 -->
+    <!-- ================================================================== -->
+
+    <DropShadowEffect x:Key="FocusGlowEffect" BlurRadius="18" ShadowDepth="0" Opacity="0.95" Color="#FF4F8CFF" />
+
+    <!-- ------------------------------------------------------------------ -->
+    <!--  Standard-Wii-Button                                                -->
+    <!-- ------------------------------------------------------------------ -->
+    <Style x:Key="WiiButtonStyle" TargetType="Button">
+        <Setter Property="FontFamily" Value="{StaticResource FontConsoleSans}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+        <Setter Property="Background" Value="{StaticResource TileBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="#334F8CFF" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="26,12" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="14"
+                            RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                        </Border.RenderTransform>
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#FF223252" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource SelectionBrush}" />
+                            <Setter TargetName="Bd" Property="Effect" Value="{StaticResource FocusGlowEffect}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource SelectionBrush}" />
+                            <Setter TargetName="Bd" Property="Effect" Value="{StaticResource FocusGlowEffect}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#FF0C1322" />
+                            <Setter TargetName="Bd" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.96" ScaleY="0.96" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.4" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!--  Primär-Button ("Starten")                                           -->
+    <!-- ------------------------------------------------------------------ -->
+    <Style x:Key="PrimaryButtonStyle" BasedOn="{StaticResource WiiButtonStyle}" TargetType="Button">
+        <Setter Property="FontFamily" Value="{StaticResource FontIisu}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="{StaticResource SelectionBrush}" />
+        <Setter Property="BorderBrush" Value="#99FFFFFF" />
+        <Setter Property="Padding" Value="34,14" />
+    </Style>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!--  Sekundär-Button (transparenter)                                     -->
+    <!-- ------------------------------------------------------------------ -->
+    <Style x:Key="SecondaryButtonStyle" BasedOn="{StaticResource WiiButtonStyle}" TargetType="Button">
+        <Setter Property="Background" Value="#800E1626" />
+        <Setter Property="BorderBrush" Value="#228A93B0" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="Padding" Value="20,10" />
+    </Style>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!--  Gefahren-Button (Entfernen / Beenden)                               -->
+    <!-- ------------------------------------------------------------------ -->
+    <Style x:Key="DangerButtonStyle" BasedOn="{StaticResource WiiButtonStyle}" TargetType="Button">
+        <Setter Property="Background" Value="#662A1230" />
+        <Setter Property="BorderBrush" Value="#66FF6B6B" />
+        <Setter Property="Foreground" Value="#FFFFB3B3" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+    </Style>
+
+<!-- ------------------------------------------------------------------ -->
+    <!--  Icon-Button (x)                                                    -->
+    <!-- ------------------------------------------------------------------ -->
+    <Style x:Key="IconButtonStyle" TargetType="Button">
+        <Setter Property="FontFamily" Value="{StaticResource FontConsoleBold}" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Foreground" Value="{StaticResource GlyphBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                            BorderBrush="#224F8CFF" BorderThickness="1" CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,2" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#33224F96" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource SelectionBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource SelectionBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.6" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!--  Wii-Schalter (Ein/Aus)                                             -->
+    <!-- ------------------------------------------------------------------ -->
+    <Style x:Key="WiiToggleStyle" TargetType="CheckBox">
+        <Setter Property="FontFamily" Value="{StaticResource FontConsoleSans}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Orientation="Horizontal">
+                        <Border x:Name="Track" Width="74" Height="38" CornerRadius="19"
+                                Background="#FF111827" BorderBrush="#334F8CFF" BorderThickness="1"
+                                VerticalAlignment="Center">
+                            <Grid>
+                                <Ellipse x:Name="Knob" Width="30" Height="30" HorizontalAlignment="Left" Margin="4"
+                                         Fill="{DynamicResource GlyphBrush}">
+                                    <Ellipse.RenderTransform>
+                                        <TranslateTransform x:Name="KnobT" X="0" Y="0" />
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                            </Grid>
+                        </Border>
+                        <ContentPresenter Margin="16,0,0,0" VerticalAlignment="Center"
+                                          Content="{TemplateBinding Content}"
+                                          RecognizesAccessKey="True" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="KnobT" Property="X" Value="36" />
+                            <Setter TargetName="Knob" Property="Fill" Value="{DynamicResource AccentVioletBrush}" />
+                            <Setter TargetName="Track" Property="BorderBrush" Value="{DynamicResource AccentVioletBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Track" Property="BorderBrush" Value="{StaticResource SelectionBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- ------------------------------------------------------------------ -->
+    <!--  Scrollbart (vertikal)                                              -->
+    <!-- ------------------------------------------------------------------ -->
+    <Style x:Key="VerticalScrollBarStyle" TargetType="ScrollBar">
+        <Setter Property="Width" Value="10" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollBar">
+                    <Grid Background="Transparent">
+                        <Track x:Name="PART_Track" IsDirectionReversed="True">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="False" Background="Transparent" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb>
+                                    <Thumb.Template>
+                                        <ControlTemplate TargetType="Thumb">
+                                            <Border Background="#77374866" CornerRadius="5" Margin="2" />
+                                        </ControlTemplate>
+                                    </Thumb.Template>
+                                </Thumb>
+                            </Track.Thumb>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="False" Background="Transparent" />
+                            </Track.IncreaseRepeatButton>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Scrollbart (horizontal) -->
+    <Style x:Key="HorizontalScrollBarStyle" TargetType="ScrollBar">
+        <Setter Property="Height" Value="10" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollBar">
+                    <Grid Background="Transparent">
+                        <Track x:Name="PART_Track" IsDirectionReversed="False">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="ScrollBar.PageLeftCommand" Opacity="0" Focusable="False" Background="Transparent" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb>
+                                    <Thumb.Template>
+                                        <ControlTemplate TargetType="Thumb">
+                                            <Border Background="#77374866" CornerRadius="5" Margin="2" />
+                                        </ControlTemplate>
+                                    </Thumb.Template>
+                                </Thumb>
+                            </Track.Thumb>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="ScrollBar.PageRightCommand" Opacity="0" Focusable="False" Background="Transparent" />
+                            </Track.IncreaseRepeatButton>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

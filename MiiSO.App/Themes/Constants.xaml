@@ -1,0 +1,125 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <!-- ================================================================== -->
+    <!--  MiiSO - Farbpalette & Design-Tokens (iiSU / Wii-Kanal-Stil)       -->
+    <!-- ================================================================== -->
+
+    <!-- Basisfarben -->
+    <Color x:Key="BlackColor">#FF000000</Color>
+    <Color x:Key="WhiteColor">#FFFFFFFF</Color>
+    <Color x:Key="GlyphColor">#FF6FA8FF</Color>
+    <Color x:Key="GlyphLightColor">#FFC9A6FF</Color>
+    <Color x:Key="SelectionLightColor">#FF37415C</Color>
+    <Color x:Key="OverlayColor">#CC0A0E17</Color>
+
+    <!-- Oberflächen -->
+    <Color x:Key="ControlBackgroundColor">#FF1E2739</Color>
+    <Color x:Key="ControlBackgroundColorDark">#FF111827</Color>
+
+    <!-- Text -->
+    <Color x:Key="TextColor">#FFEAF0FF</Color>
+    <Color x:Key="TextColorDark">#FF8A93B0</Color>
+
+    <!-- Akzentfarbe (per Akzent-Palette austauschbar) -->
+    <Color x:Key="AccentBlueColor">#FF4F8CFF</Color>
+    <Color x:Key="AccentVioletColor">#FF9B6DFF</Color>
+    <Color x:Key="AccentPinkColor">#FFF472B6</Color>
+    <Color x:Key="AccentTealColor">#FF4FD8B0</Color>
+    <Color x:Key="PanelColor">#F2151B2C</Color>
+    <Color x:Key="WarningColor">#FFFF6B6B</Color>
+
+    <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
+    <SolidColorBrush x:Key="TextBrushDark" Color="{DynamicResource TextColorDark}" />
+    <SolidColorBrush x:Key="GlyphBrush" Color="{DynamicResource GlyphColor}" />
+    <SolidColorBrush x:Key="GlyphLightBrush" Color="{DynamicResource GlyphLightColor}" />
+    <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{DynamicResource ControlBackgroundColor}" />
+    <SolidColorBrush x:Key="ControlBackgroundDarkBrush" Color="{DynamicResource ControlBackgroundColorDark}" />
+    <SolidColorBrush x:Key="SelectionLightBrush" Color="{DynamicResource SelectionLightColor}" />
+    <SolidColorBrush x:Key="OverlayBrush" Color="{DynamicResource OverlayColor}" />
+    <SolidColorBrush x:Key="AccentBlueBrush" Color="{DynamicResource AccentBlueColor}" />
+    <SolidColorBrush x:Key="AccentVioletBrush" Color="{DynamicResource AccentVioletColor}" />
+    <SolidColorBrush x:Key="AccentPinkBrush" Color="{DynamicResource AccentPinkColor}" />
+    <SolidColorBrush x:Key="AccentTealBrush" Color="{DynamicResource AccentTealColor}" />
+    <SolidColorBrush x:Key="WarningBrush" Color="{DynamicResource WarningColor}" />
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource WhiteColor}" />
+
+<!-- Haupt-Hintergrund: tiefer Navy mit radialem Glow -->
+    <RadialGradientBrush x:Key="MainBackgourndBrush" GradientOrigin="0.5,0.05" Center="0.5,0.2" RadiusX="0.6" RadiusY="0.8">
+        <GradientStop Color="#FF14234A" Offset="0.0" />
+        <GradientStop Color="#FF0E1A33" Offset="0.55" />
+        <GradientStop Color="#FF0A0E17" Offset="1.0" />
+    </RadialGradientBrush>
+
+    <!-- Topbar / Bottombar -->
+    <LinearGradientBrush x:Key="TopBarBackgroundBrush" StartPoint="-0.5,0.5" EndPoint="1,0.5">
+        <GradientStop Color="#E60E1B36" Offset="0" />
+        <GradientStop Color="#CC0A0E17" Offset="0.6" />
+        <GradientStop Color="#E60F1529" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BottomBarBackgroundBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Color="#E6121830" Offset="0" />
+        <GradientStop Color="#F20A0E17" Offset="1" />
+    </LinearGradientBrush>
+
+    <!-- Auswahl / Fokus-Glow: Blau -&gt; Violett -->
+    <LinearGradientBrush x:Key="SelectionBrush" StartPoint="0.5,-0.5" EndPoint="1,1.5">
+        <GradientStop Color="{DynamicResource AccentBlueColor}" Offset="0" />
+        <GradientStop Color="{DynamicResource AccentVioletColor}" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <!-- Kachel-Oberflächen -->
+    <LinearGradientBrush x:Key="TileBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#FF1C2740" Offset="0" />
+        <GradientStop Color="#FF131B2E" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="GameDetailsOverlayBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Color="#660A0E17" Offset="0" />
+        <GradientStop Color="#F20A0E17" Offset="0.75" />
+        <GradientStop Color="#FF0A0E17" Offset="1" />
+    </LinearGradientBrush>
+
+    <Color x:Key="TileBandColor">#F2080C14</Color>
+    <SolidColorBrush x:Key="TileBandBrush" Color="{DynamicResource TileBandColor}" />
+
+    <!-- ================================================================== -->
+    <!--  Fonts (gebündelt in /Assets/Fonts)                                 -->
+    <!-- ================================================================== -->
+    <FontFamily x:Key="FontConsoleSans">pack://application:,,,/Assets/Fonts/console_sans_regular.otf#Console Sans</FontFamily>
+    <FontFamily x:Key="FontConsoleMedium">pack://application:,,,/Assets/Fonts/console_sans_medium.otf#Console Sans Medium</FontFamily>
+    <FontFamily x:Key="FontConsoleSemibold">pack://application:,,,/Assets/Fonts/console_sans_semibold.otf#Console Sans Semibold</FontFamily>
+    <FontFamily x:Key="FontConsoleBold">pack://application:,,,/Assets/Fonts/console_sans_bold.otf#Console Sans Bold</FontFamily>
+    <FontFamily x:Key="FontConsoleExtraBold">pack://application:,,,/Assets/Fonts/console_sans_extrabold.otf#Console Sans Extrabold</FontFamily>
+    <FontFamily x:Key="FontIisu">pack://application:,,,/Assets/Fonts/iisu_arctainium.ttf#Arctainium</FontFamily>
+    <FontFamily x:Key="FontGameNum">pack://application:,,,/Assets/Fonts/gamenum_regular.otf#Gamenum</FontFamily>
+    <FontFamily x:Key="FontGameMaster">pack://application:,,,/Assets/Fonts/gamemaster_regular.otf#Gamemaster</FontFamily>
+
+    <!-- Schriftgrößen -->
+    <sys:Double x:Key="FontSizeSmall">17</sys:Double>
+    <sys:Double x:Key="FontSize">21</sys:Double>
+    <sys:Double x:Key="FontSizeLarge">30</sys:Double>
+    <sys:Double x:Key="FontSizeHuge">46</sys:Double>
+
+    <!-- ================================================================== -->
+    <!--  Basis-Textstyles                                                  -->
+    <!-- ================================================================== -->
+    <Style x:Key="TextBlockBaseStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontConsoleSans}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+    </Style>
+
+    <Style x:Key="TextBlockTitleStyle" BasedOn="{StaticResource TextBlockBaseStyle}" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontIisu}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeHuge}" />
+    </Style>
+
+    <Style x:Key="TextBlockSectionStyle" BasedOn="{StaticResource TextBlockBaseStyle}" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontIisu}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+        <Setter Property="Foreground" Value="{StaticResource GlyphLightBrush}" />
+    </Style>
+</ResourceDictionary>

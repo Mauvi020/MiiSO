@@ -1,0 +1,38 @@
+<UserControl x:Class="MiiSO.Views.AboutView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="860">
+            <Image Source="pack://application:,,,/Assets/Images/logo.png"
+                   MaxHeight="170" Stretch="Uniform" HorizontalAlignment="Center" />
+            <TextBlock HorizontalAlignment="Center" Margin="0,22,0,0"
+                       FontFamily="{DynamicResource FontIisu}" FontSize="42"
+                       Foreground="{DynamicResource TextBrush}"
+                       Text="MiiSO v1.0.0" />
+            <TextBlock x:Name="AboutText" Margin="0,18,0,0" TextAlignment="Center" TextWrapping="Wrap"
+                       FontFamily="{DynamicResource FontConsoleSans}" FontSize="19" LineHeight="28"
+                       Foreground="{DynamicResource TextBrushDark}"
+                       Text="Ein eigenständiger Game-Launcher im Stil der iiSU-App (Wii-Kanäle-Design).
+Grafiken und Schriftarten stammen aus iiSU-Alpha-7.4 und werden nur für private Zwecke genutzt.
+Steuerung: Pfeiltasten + A/Enter · B/Esc zurück · Gamepad wird unterstützt · F11 = Vollbild." />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,0">
+                <Button x:Name="GitHubButton" Style="{DynamicResource SecondaryButtonStyle}"
+                        Content="GitHub anzeigen" Height="64" Width="230" Click="GitHub_Clicked" />
+                <Button x:Name="BackButton" Style="{DynamicResource PrimaryButtonStyle}"
+                        Content="Zurück zum Anfang" Height="64" Width="280" Margin="20,0,0,0"
+                        Click="Back_Clicked" />
+            </StackPanel>
+        </StackPanel>
+
+        <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,12"
+                   FontFamily="{DynamicResource FontConsoleSans}" FontSize="15"
+                   Foreground="{DynamicResource TextBrushDark}"
+                   Text="F1 Start · F2 Spiele · F3 Einstellungen" />
+    </Grid>
+</UserControl>

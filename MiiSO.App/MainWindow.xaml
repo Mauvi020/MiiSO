@@ -1,0 +1,97 @@
+<Window x:Class="MiiSO.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MiiSO"
+        Width="1280" Height="720"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        Background="{DynamicResource MainBackgourndBrush}"
+        KeyDown="Window_KeyDown">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="96" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="88" />
+        </Grid.RowDefinitions>
+
+        <!-- Punkte-Overlay (iiSU-Textur) -->
+        <Image x:Name="DotsOverlay" Grid.RowSpan="3"
+               Source="pack://application:,,,/Assets/Images/dots.png"
+               Stretch="UniformToFill" Opacity="0.16" IsHitTestVisible="False" />
+
+        <!-- ===================== Topbar ===================== -->
+        <Border Grid.Row="0"
+                Background="{DynamicResource TopBarBackgroundBrush}"
+                BorderBrush="#226FA8FF" BorderThickness="0,0,0,1"
+                MouseLeftButtonDown="TopBar_MouseDown">
+            <Grid Margin="28,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Source="pack://application:,,,/Assets/Images/logo.png"
+                           MaxHeight="60" Stretch="Uniform"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock x:Name="PageTitleText" Margin="28,0,0,6" VerticalAlignment="Center"
+                               FontFamily="{DynamicResource FontIisu}" FontSize="40"
+                               Foreground="{DynamicResource TextBrush}"
+                               Text="Start" TextTrimming="CharacterEllipsis" MaxWidth="700" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="ClockText"
+                               FontFamily="{DynamicResource FontGameNum}" FontSize="36"
+                               Foreground="{DynamicResource GlyphBrush}" Text="00:00"
+                               VerticalAlignment="Center" />
+                    <TextBlock x:Name="DateText" Margin="20,2,4,0"
+                               FontFamily="{DynamicResource FontConsoleSans}" FontSize="16"
+                               Foreground="{DynamicResource TextBrushDark}"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ===================== Content ===================== -->
+        <ContentControl x:Name="ContentHost" Grid.Row="1" Focusable="False" />
+
+        <!-- ===================== Bottom-Bar ===================== -->
+        <Border Grid.Row="2"
+                Background="{DynamicResource BottomBarBackgroundBrush}"
+                BorderBrush="#226FA8FF" BorderThickness="0,1,0,0">
+            <Grid Margin="32,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Links: B = zurück -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="B" FontFamily="{DynamicResource FontIisu}" FontSize="26"
+                               Foreground="{DynamicResource AccentVioletBrush}" VerticalAlignment="Center" />
+                    <TextBlock Text="Zurück" Margin="10,0,0,0"
+                               FontFamily="{DynamicResource FontConsoleSans}" FontSize="18"
+                               Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center" />
+                </StackPanel>
+
+                <!-- Mitte: A = Aktion -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="A" FontFamily="{DynamicResource FontIisu}" FontSize="26"
+                               Foreground="{DynamicResource AccentBlueBrush}" VerticalAlignment="Center" />
+                    <TextBlock x:Name="HintText" Margin="10,0,0,0" Text="Öffnen"
+                               FontFamily="{DynamicResource FontConsoleSans}" FontSize="18"
+                               Foreground="{DynamicResource TextBrushDark}" VerticalAlignment="Center" />
+                </StackPanel>
+
+                <!-- Rechts: Version -->
+                <TextBlock x:Name="VersionText" Grid.Column="2" VerticalAlignment="Center"
+                           FontFamily="{DynamicResource FontConsoleSans}" FontSize="15"
+                           Foreground="{DynamicResource TextBrushDark}" Text="MiiSO v1.0.0" />
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

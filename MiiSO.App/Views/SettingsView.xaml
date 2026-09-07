@@ -1,0 +1,125 @@
+<UserControl x:Class="MiiSO.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled"
+                  Margin="44,14,44,10">
+        <ScrollViewer.Resources>
+            <Style TargetType="ScrollBar" BasedOn="{StaticResource VerticalScrollBarStyle}" />
+        </ScrollViewer.Resources>
+        <StackPanel>
+
+            <!-- ============ Spiele-Ordner ============ -->
+            <TextBlock Style="{StaticResource TextBlockSectionStyle}" Text="SPIELE-ORDNER" />
+            <Border Background="#55111C33" BorderBrush="#33224F96" BorderThickness="1"
+                    CornerRadius="14" Padding="22,18" Margin="0,12,0,0">
+                <StackPanel>
+                    <ItemsControl x:Name="FolderList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding}" VerticalAlignment="Center"
+                                               FontFamily="{DynamicResource FontConsoleSans}" FontSize="18"
+                                               Foreground="{DynamicResource TextBrush}"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <Button Grid.Column="1" Style="{DynamicResource IconButtonStyle}"
+                                            Content="&#x2715;" Margin="12,0,0,0"
+                                            Tag="{Binding}" Click="RemoveFolder_Clicked"
+                                            ToolTip="Ordner entfernen" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock x:Name="FolderStatusText" Margin="0,8,0,0"
+                               FontFamily="{DynamicResource FontConsoleSans}" FontSize="16"
+                               Foreground="{DynamicResource TextBrushDark}"
+                               Text="Noch keine Ordner." />
+                    <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                        <Button Style="{DynamicResource WiiButtonStyle}" Content="Ordner hinzufügen …"
+                                Click="AddFolder_Clicked" />
+                        <Button Style="{DynamicResource WiiButtonStyle}" Content="Jetzt nach Spielen suchen"
+                                Margin="16,0,0,0" Click="Rescan_Clicked" />
+                        <Button Style="{DynamicResource SecondaryButtonStyle}" Content="Bibliothek öffnen"
+                                Margin="16,0,0,0" Click="OpenLibrary_Clicked" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- ============ Anzeige ============ -->
+            <TextBlock Style="{StaticResource TextBlockSectionStyle}" Text="ANZEIGE" Margin="0,28,0,0" />
+            <Border Background="#55111C33" BorderBrush="#33224F96" BorderThickness="1"
+                    CornerRadius="14" Padding="22,18" Margin="0,12,0,0">
+                <StackPanel>
+                    <CheckBox x:Name="FullscreenToggle" Style="{DynamicResource WiiToggleStyle}"
+                              Content="Im Vollbild starten"
+                              Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                    <CheckBox x:Name="DotsToggle" Style="{DynamicResource WiiToggleStyle}" Margin="0,14,0,0"
+                              Content="Punkt-Overlay im Hintergrund"
+                              Checked="Toggle_Changed" Unchecked="Toggle_Changed" />
+                    <StackPanel Orientation="Horizontal" Margin="0,18,0,0">
+                        <Button Style="{DynamicResource WiiButtonStyle}" Content="Vollbild umschalten (F11)"
+                                Click="ToggleFullscreen_Clicked" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- ============ Akzentfarbe ============ -->
+            <TextBlock Style="{StaticResource TextBlockSectionStyle}" Text="AKZENTFARBE" Margin="0,28,0,0" />
+            <Border Background="#55111C33" BorderBrush="#33224F96" BorderThickness="1"
+                    CornerRadius="14" Padding="22,18" Margin="0,12,0,0">
+                <ItemsControl x:Name="AccentList">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Style="{DynamicResource WiiButtonStyle}" Margin="0,0,16,0"
+                                    Padding="18,10" Tag="{Binding Index}" Click="Accent_Clicked">
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Width="26" Height="26" VerticalAlignment="Center">
+                                        <Ellipse.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="{Binding Blue}" Offset="0" />
+                                                <GradientStop Color="{Binding Violet}" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <TextBlock Text="{Binding Name}" Margin="12,0,0,0"
+                                               FontFamily="{DynamicResource FontConsoleSans}" FontSize="18"
+                                               Foreground="{DynamicResource TextBrush}"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+
+            <!-- ============ Über ============ -->
+            <TextBlock Style="{StaticResource TextBlockSectionStyle}" Text="ÜBER MiiSO" Margin="0,28,0,0" />
+            <Border Background="#55111C33" BorderBrush="#33224F96" BorderThickness="1"
+                    CornerRadius="14" Padding="22,18" Margin="0,12,0,16">
+                <StackPanel>
+                    <TextBlock FontFamily="{DynamicResource FontConsoleSans}" FontSize="17"
+                               Foreground="{DynamicResource TextBrushDark}" TextWrapping="Wrap"
+                               Text="MiiSO speichert deine Einstellungen unter %AppData%\MiiSO.
+Die Bibliothek wird beim Start geladen – neue Spiele findest du über „Jetzt nach Spielen suchen"." />
+                    <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                        <Button Style="{DynamicResource SecondaryButtonStyle}" Content="GitHub anzeigen"
+                                Click="GitHub_Clicked" />
+                        <Button Style="{DynamicResource DangerButtonStyle}" Content="MiiSO beenden"
+                                Margin="16,0,0,0" Click="Quit_Clicked" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
