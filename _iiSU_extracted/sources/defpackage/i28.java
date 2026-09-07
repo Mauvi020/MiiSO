@@ -1,0 +1,16 @@
+package defpackage;
+
+/* JADX INFO: compiled from: r8-map-id-2a50c0369e92087812e54748034d27ec95c033a3a5145ed80421924f55507ca7 */
+/* JADX INFO: loaded from: classes2.dex */
+public final class i28 implements yu {
+    public final String a;
+
+    public i28(String str) {
+        this.a = str;
+    }
+
+    @Override // defpackage.yu
+    public final int getType() {
+        return 1852994675;
+    }
+}

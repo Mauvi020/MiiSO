@@ -1,0 +1,11 @@
+package org.chromium.support_lib_boundary;
+
+import android.net.Uri;
+import android.webkit.WebView;
+import java.lang.reflect.InvocationHandler;
+
+/* JADX INFO: compiled from: r8-map-id-2a50c0369e92087812e54748034d27ec95c033a3a5145ed80421924f55507ca7 */
+/* JADX INFO: loaded from: classes2.dex */
+public interface WebMessageListenerBoundaryInterface extends FeatureFlagHolderBoundaryInterface {
+    void onPostMessage(WebView webView, InvocationHandler invocationHandler, Uri uri, boolean z, InvocationHandler invocationHandler2);
+}

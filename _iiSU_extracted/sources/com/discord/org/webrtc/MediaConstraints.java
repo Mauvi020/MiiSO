@@ -1,0 +1,81 @@
+package com.discord.org.webrtc;
+
+import defpackage.j55;
+import defpackage.qv7;
+import java.util.ArrayList;
+import java.util.List;
+
+/* JADX INFO: compiled from: r8-map-id-2a50c0369e92087812e54748034d27ec95c033a3a5145ed80421924f55507ca7 */
+/* JADX INFO: loaded from: classes2.dex */
+public class MediaConstraints {
+    public final List<KeyValuePair> mandatory = new ArrayList();
+    public final List<KeyValuePair> optional = new ArrayList();
+
+    /* JADX INFO: compiled from: r8-map-id-2a50c0369e92087812e54748034d27ec95c033a3a5145ed80421924f55507ca7 */
+    public static class KeyValuePair {
+        private final String key;
+        private final String value;
+
+        public KeyValuePair(String str, String str2) {
+            this.key = str;
+            this.value = str2;
+        }
+
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj != null && getClass() == obj.getClass()) {
+                KeyValuePair keyValuePair = (KeyValuePair) obj;
+                if (this.key.equals(keyValuePair.key) && this.value.equals(keyValuePair.value)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @CalledByNative("KeyValuePair")
+        public String getKey() {
+            return this.key;
+        }
+
+        @CalledByNative("KeyValuePair")
+        public String getValue() {
+            return this.value;
+        }
+
+        public int hashCode() {
+            return this.value.hashCode() + this.key.hashCode();
+        }
+
+        public String toString() {
+            return qv7.k(this.key, ": ", this.value);
+        }
+    }
+
+    private static String stringifyKeyValuePairList(List<KeyValuePair> list) {
+        StringBuilder sb = new StringBuilder("[");
+        for (KeyValuePair keyValuePair : list) {
+            if (sb.length() > 1) {
+                sb.append(", ");
+            }
+            sb.append(keyValuePair.toString());
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+    @CalledByNative
+    public List<KeyValuePair> getMandatory() {
+        return this.mandatory;
+    }
+
+    @CalledByNative
+    public List<KeyValuePair> getOptional() {
+        return this.optional;
+    }
+
+    public String toString() {
+        return j55.k("mandatory: ", stringifyKeyValuePairList(this.mandatory), ", optional: ", stringifyKeyValuePairList(this.optional));
+    }
+}

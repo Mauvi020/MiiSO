@@ -1,0 +1,42 @@
+package com.discord.org.webrtc;
+
+/* JADX INFO: compiled from: r8-map-id-2a50c0369e92087812e54748034d27ec95c033a3a5145ed80421924f55507ca7 */
+/* JADX INFO: loaded from: classes2.dex */
+class NativeLibrary {
+    private static String TAG = "NativeLibrary";
+    private static boolean libraryLoaded;
+    private static Object lock = new Object();
+
+    /* JADX INFO: compiled from: r8-map-id-2a50c0369e92087812e54748034d27ec95c033a3a5145ed80421924f55507ca7 */
+    public static class DefaultLoader implements NativeLibraryLoader {
+        @Override // com.discord.org.webrtc.NativeLibraryLoader
+        public boolean load(String str) {
+            Logging.d(NativeLibrary.TAG, "Loading library: " + str);
+            System.loadLibrary(str);
+            return true;
+        }
+    }
+
+    public static void initialize(NativeLibraryLoader nativeLibraryLoader, String str) {
+        synchronized (lock) {
+            try {
+                if (libraryLoaded) {
+                    Logging.d(TAG, "Native library has already been loaded.");
+                    return;
+                }
+                Logging.d(TAG, "Loading native library: " + str);
+                libraryLoaded = nativeLibraryLoader.load(str);
+            } catch (Throwable th) {
+                throw th;
+            }
+        }
+    }
+
+    public static boolean isLoaded() {
+        boolean z;
+        synchronized (lock) {
+            z = libraryLoaded;
+        }
+        return z;
+    }
+}

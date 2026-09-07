@@ -1,0 +1,53 @@
+package defpackage;
+
+import java.io.File;
+
+/* JADX INFO: compiled from: r8-map-id-2a50c0369e92087812e54748034d27ec95c033a3a5145ed80421924f55507ca7 */
+/* JADX INFO: loaded from: classes2.dex */
+public final class pg6 implements qg6 {
+    public final File a;
+    public final String b;
+    public final String c;
+
+    public pg6(File file, String str, String str2) {
+        this.a = file;
+        this.b = str;
+        this.c = str2;
+    }
+
+    @Override // defpackage.qg6
+    public final String a() {
+        return this.b;
+    }
+
+    @Override // defpackage.qg6
+    public final String b() {
+        return this.c;
+    }
+
+    public final boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof pg6)) {
+            return false;
+        }
+        pg6 pg6Var = (pg6) obj;
+        return this.a.equals(pg6Var.a) && this.b.equals(pg6Var.b) && ye4.p(this.c, pg6Var.c);
+    }
+
+    public final int hashCode() {
+        int iC = a68.c(this.a.hashCode() * 31, 31, this.b);
+        String str = this.c;
+        return iC + (str == null ? 0 : str.hashCode());
+    }
+
+    public final String toString() {
+        StringBuilder sb = new StringBuilder("FileCandidate(parent=");
+        sb.append(this.a);
+        sb.append(", baseName=");
+        sb.append(this.b);
+        sb.append(", titleIdHint=");
+        return pk0.k(sb, this.c, ")");
+    }
+}

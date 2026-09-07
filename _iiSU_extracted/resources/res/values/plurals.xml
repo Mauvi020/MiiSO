@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="exo_controls_fastforward_by_amount_description">
+        <item quantity="one">Fast forward %d second</item>
+        <item quantity="other">Fast forward %d seconds</item>
+    </plurals>
+    <plurals name="exo_controls_rewind_by_amount_description">
+        <item quantity="one">Rewind %d second</item>
+        <item quantity="other">Rewind %d seconds</item>
+    </plurals>
+    <plurals name="home_rom_category_games_count">
+        <item quantity="one">%d game</item>
+        <item quantity="other">%d games</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="one">%d new notification</item>
+        <item quantity="other">%d new notifications</item>
+    </plurals>
+    <plurals name="notification_message_game_library_import_complete">
+        <item quantity="one">Indexed 1 console</item>
+        <item quantity="other">Indexed %1$d consoles</item>
+    </plurals>
+    <plurals name="notification_message_rom_indexing_complete">
+        <item quantity="one">Indexed %1$d ROM across %2$d consoles (%3$d files scanned)</item>
+        <item quantity="other">Indexed %1$d ROMs across %2$d consoles (%3$d files scanned)</item>
+    </plurals>
+    <plurals name="notification_message_rom_indexing_more_issues">
+        <item quantity="one">1 more</item>
+        <item quantity="other">%1$d more</item>
+    </plurals>
+    <plurals name="settings_backups_frequency_days">
+        <item quantity="one">Every day</item>
+        <item quantity="other">Every %1$d days</item>
+    </plurals>
+    <plurals name="settings_discord_hidden_users_count">
+        <item quantity="one">%1$d hidden</item>
+        <item quantity="other">%1$d hidden</item>
+    </plurals>
+    <plurals name="settings_game_library_link_success">
+        <item quantity="one">Linked 1 console</item>
+        <item quantity="other">Linked %1$d consoles</item>
+    </plurals>
+</resources>

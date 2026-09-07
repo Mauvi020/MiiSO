@@ -1,0 +1,33 @@
+package defpackage;
+
+/* JADX INFO: compiled from: r8-map-id-2a50c0369e92087812e54748034d27ec95c033a3a5145ed80421924f55507ca7 */
+/* JADX INFO: loaded from: classes2.dex */
+public final class hi7 {
+    public final String a;
+    public final String b;
+
+    public hi7(String str, String str2) {
+        str2.getClass();
+        this.a = str;
+        this.b = str2;
+    }
+
+    public final boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof hi7)) {
+            return false;
+        }
+        hi7 hi7Var = (hi7) obj;
+        return this.a.equals(hi7Var.a) && ye4.p(this.b, hi7Var.b);
+    }
+
+    public final int hashCode() {
+        return this.b.hashCode() + (this.a.hashCode() * 31);
+    }
+
+    public final String toString() {
+        return rx1.r("CachedSecureString(stored=", this.a, ", value=", this.b, ")");
+    }
+}
