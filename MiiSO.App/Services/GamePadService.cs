@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
@@ -9,8 +10,29 @@ namespace MiiSO.Services;
 public enum PadButton
 {
     Up, Down, Left, Right,
-    A, B, Start, Back,
-    LeftBumper, RightBumper
+    A, B, X, Y, Start, Back,
+    LeftBumper, RightBumper,
+    LeftTrigger, RightTrigger
+}
+
+/// <summary>Kleines Diagnose-Log für Controller-Erkennung (%AppData%\MiiSO\gamepad.log).</summary>
+internal static class PadLog
+{
+    private static readonly object Gate = new();
+
+    public static void Write(string msg)
+    {
+        try
+        {
+            var dir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MiiSO");
+            Directory.CreateDirectory(dir);
+            lock (Gate)
+                File.AppendAllText(Path.Combine(dir, "gamepad.log"),
+                    $"[{DateTime.Now:HH:mm:ss}] {msg}\n");
+        }
+        catch { }
+    }
 }
 
 /// <summary>
@@ -20,6 +42,13 @@ public enum PadButton
 public sealed class GamePadService
 {
     public event Action<PadButton>? ButtonPressed;
+    public event Action<bool>? ConnectionChanged;
+
+    /// <summary>true, wenn im letzten Poll-Zyklus ein Controller antwortete.</summary>
+    public bool IsConnected { get; private set; }
+
+    /// <summary>Name der geladenen XInput-DLL (Diagnose).</summary>
+    public string? DiagDll { get; private set; }
 
     private volatile bool _running;
     private Thread? _thread;
@@ -28,49 +57,80 @@ public sealed class GamePadService
     {
         if (_thread != null) return;
         _running = true;
-        _thread = new Thread(Poll) { IsBackground = true };
+        _thread = new Thread(Poll) { IsBackground = true, Name = "MiiSO-GamePad" };
         _thread.Start();
     }
 
     public void Stop() => _running = false;
 
+    private void SetConnected(bool on)
+    {
+        if (IsConnected == on) return;
+        IsConnected = on;
+        PadLog.Write(on
+            ? $"Controller verbunden ({DiagDll ?? "?"})"
+            : "Controller getrennt / kein Controller gefunden");
+        Application.Current?.Dispatcher.BeginInvoke(DispatcherPriority.Input,
+            new Action(() => ConnectionChanged?.Invoke(on)));
+    }
+
     private void Poll()
     {
+        PadLog.Write("GamePad-Poll gestartet");
+
+        if (!XInput.Init())
+        {
+            PadLog.Write("FEHLER: keine XInput-DLL gefunden (xinput1_4 / xinput1_3 / xinput9_1_0)");
+            SetConnected(false);
+            return;
+        }
+        DiagDll = XInput.DllName;
+        PadLog.Write("XInput geladen: " + XInput.DllName);
+
         uint last = 0;
         long nextRepeat = 0;
         while (_running)
         {
             try
             {
-                uint err = XInput.XInputGetState(0, out var state);
+                uint err = XInput.GetState!(0, out var state);
                 if (err != 0)
                 {
-                    if (last != 0) { last = 0; }
-                    Thread.Sleep(60);
+                    SetConnected(false);
+                    last = 0;
+                    Thread.Sleep(120);
                     continue;
                 }
+                SetConnected(true);
 
-                uint pressed = state.Gamepad.wButtons | StickButtons(state.Gamepad);
+                // Analogstick + Trigger als virtuelle Button-Bits
+                uint pressed = state.Gamepad.wButtons
+                               | StickButtons(state.Gamepad)
+                               | TriggerButtons(state.Gamepad);
                 var now = Environment.TickCount64;
 
                 uint changed = pressed & ~last;
                 if (changed != 0)
                 {
-                    foreach (var (mask, btn) in Mapping)
+                    foreach (var (mask, btn, _) in Mapping)
                         if ((changed & mask) != 0) Fire(btn);
                     nextRepeat = now + 400;
                 }
                 else if (pressed != 0 && now >= nextRepeat)
                 {
-                    foreach (var (mask, btn) in Mapping)
-                        if ((pressed & mask) != 0) Fire(btn);
+                    foreach (var (mask, btn, repeat) in Mapping)
+                        if (repeat && (pressed & mask) != 0) Fire(btn);
                     nextRepeat = now + 130;
                 }
                 last = pressed;
             }
-            catch { }
+            catch (Exception ex)
+            {
+                PadLog.Write("Poll-Fehler: " + ex.Message);
+            }
             Thread.Sleep(30);
         }
+        PadLog.Write("GamePad-Poll beendet");
     }
 
     private const short StickThreshold = 12000;
