@@ -37,6 +37,8 @@ public partial class MainWindow : Window
         _about = new AboutView(this);
 
         App.GamePad.ButtonPressed += OnPadButton;
+        App.GamePad.ConnectionChanged += connected =>
+            SetHint(connected ? "🎮 Controller verbunden" : "Controller getrennt - Tastatur aktiv");
         Loaded += (_, _) => ApplyDots();
         Navigate(AppPage.Home);
     }
@@ -219,12 +221,24 @@ public partial class MainWindow : Window
                 InputSimulator.RaiseKey(Key.Enter);
                 break;
             case PadButton.B:
-                RequestBack();
+                InputSimulator.RaiseKey(Key.Escape);
                 break;
-            case PadButton.Up: InputSimulator.RaiseKey(Key.Up); break;
-            case PadButton.Down: InputSimulator.RaiseKey(Key.Down); break;
-            case PadButton.Left: InputSimulator.RaiseKey(Key.Left); break;
-            case PadButton.Right: InputSimulator.RaiseKey(Key.Right); break;
+            case PadButton.X:
+                Navigate(AppPage.Games);
+                break;
+            case PadButton.Y:
+                Navigate(AppPage.Settings);
+                break;
+            case PadButton.RightTrigger:
+                InputSimulator.RaiseKey(Key.Enter);
+                break;
+            case PadButton.LeftTrigger:
+                InputSimulator.RaiseKey(Key.Escape);
+                break;
+            case PadButton.Up: EnsureFocus(); InputSimulator.RaiseKey(Key.Up); break;
+            case PadButton.Down: EnsureFocus(); InputSimulator.RaiseKey(Key.Down); break;
+            case PadButton.Left: EnsureFocus(); InputSimulator.RaiseKey(Key.Left); break;
+            case PadButton.Right: EnsureFocus(); InputSimulator.RaiseKey(Key.Right); break;
             case PadButton.Start:
                 ToggleFullscreen();
                 break;
@@ -234,6 +248,15 @@ public partial class MainWindow : Window
             case PadButton.LeftBumper: Navigate(AppPage.Home); break;
             case PadButton.RightBumper: Navigate(AppPage.Games); break;
         }
+    }
+
+    /// <summary>Sorgt dafür, dass Richtungstasten immer ein Ziel haben,
+    /// auch wenn gerade kein Control den Fokus hält (z. B. nach Mausklick).</summary>
+    private void EnsureFocus()
+    {
+        if (Keyboard.FocusedElement is UIElement fe && fe.IsVisible && !ReferenceEquals(fe, this))
+            return;
+        FocusInitial(_currentPage);
     }
 
     public void ToggleFullscreen() => SetFullscreen(WindowState != WindowState.Maximized);

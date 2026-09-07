@@ -134,6 +134,7 @@ public sealed class GamePadService
     }
 
     private const short StickThreshold = 12000;
+    private const byte TriggerThreshold = 100;
 
     /// <summary>Mappt den linken Analogstick auf D-Pad-Bitmasken (inkl. Diagonalen).</summary>
     private static uint StickButtons(XINPUT_GAMEPAD g)
@@ -146,18 +147,32 @@ public sealed class GamePadService
         return b;
     }
 
-    private static readonly (uint Mask, PadButton Button)[] Mapping =
+    /// <summary>Mappt die analogen Trigger auf synthetische Bits (kein Auto-Repeat).</summary>
+    private static uint TriggerButtons(XINPUT_GAMEPAD g)
     {
-        (XInput.GAMEPAD_DPAD_UP, PadButton.Up),
-        (XInput.GAMEPAD_DPAD_DOWN, PadButton.Down),
-        (XInput.GAMEPAD_DPAD_LEFT, PadButton.Left),
-        (XInput.GAMEPAD_DPAD_RIGHT, PadButton.Right),
-        (XInput.GAMEPAD_A, PadButton.A),
-        (XInput.GAMEPAD_B, PadButton.B),
-        (XInput.GAMEPAD_START, PadButton.Start),
-        (XInput.GAMEPAD_BACK, PadButton.Back),
-        (XInput.GAMEPAD_LEFT_SHOULDER, PadButton.LeftBumper),
-        (XInput.GAMEPAD_RIGHT_SHOULDER, PadButton.RightBumper),
+        uint b = 0;
+        if (g.bLeftTrigger > TriggerThreshold) b |= XInput.VIRTUAL_LTRIGGER;
+        if (g.bRightTrigger > TriggerThreshold) b |= XInput.VIRTUAL_RTRIGGER;
+        return b;
+    }
+
+    // (Bitmaske, Button, Auto-Repeat) - Repeat nur für Navigationstasten
+    private static readonly (uint Mask, PadButton Button, bool Repeat)[] Mapping =
+    {
+        (XInput.GAMEPAD_DPAD_UP, PadButton.Up, true),
+        (XInput.GAMEPAD_DPAD_DOWN, PadButton.Down, true),
+        (XInput.GAMEPAD_DPAD_LEFT, PadButton.Left, true),
+        (XInput.GAMEPAD_DPAD_RIGHT, PadButton.Right, true),
+        (XInput.GAMEPAD_A, PadButton.A, true),
+        (XInput.GAMEPAD_B, PadButton.B, false),
+        (XInput.GAMEPAD_X, PadButton.X, false),
+        (XInput.GAMEPAD_Y, PadButton.Y, false),
+        (XInput.GAMEPAD_START, PadButton.Start, false),
+        (XInput.GAMEPAD_BACK, PadButton.Back, false),
+        (XInput.GAMEPAD_LEFT_SHOULDER, PadButton.LeftBumper, false),
+        (XInput.GAMEPAD_RIGHT_SHOULDER, PadButton.RightBumper, false),
+        (XInput.VIRTUAL_LTRIGGER, PadButton.LeftTrigger, false),
+        (XInput.VIRTUAL_RTRIGGER, PadButton.RightTrigger, false),
     };
 
     private void Fire(PadButton b)
@@ -179,9 +194,49 @@ internal static class XInput
     public const uint GAMEPAD_RIGHT_SHOULDER = 0x0200;
     public const uint GAMEPAD_A = 0x1000;
     public const uint GAMEPAD_B = 0x2000;
+    public const uint GAMEPAD_X = 0x4000;
+    public const uint GAMEPAD_Y = 0x8000;
 
-    [DllImport("xinput1_4.dll")]
-    public static extern uint XInputGetState(int dwUserIndex, out XINPUT_STATE pState);
+    // Synthetische Bits für analoge Trigger (in wButtons unbenutzt)
+    public const uint VIRTUAL_LTRIGGER = 0x0400;
+    public const uint VIRTUAL_RTRIGGER = 0x0800;
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate uint XInputGetStateDelegate(int dwUserIndex, out XINPUT_STATE pState);
+
+    public static XInputGetStateDelegate? GetState;
+    public static string? DllName;
+
+    /// <summary>
+    /// Sucht systemweit die erste verfügbare XInput-DLL (neu -> alt).
+    /// Lädt sie dynamisch, damit die App auch startet, wenn keine existiert.
+    /// </summary>
+    public static bool Init()
+    {
+        if (GetState != null) return true;
+
+        foreach (var name in new[] { "xinput1_4.dll", "xinput1_3.dll", "xinput9_1_0.dll" })
+        {
+            try
+            {
+                var h = LoadLibrary(name);
+                if (h == IntPtr.Zero) continue;
+                var addr = GetProcAddress(h, "XInputGetState");
+                if (addr == IntPtr.Zero) continue;
+                GetState = Marshal.GetDelegateForFunctionPointer<XInputGetStateDelegate>(addr);
+                DllName = name;
+                return true;
+            }
+            catch { }
+        }
+        return false;
+    }
+
+    [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
+    private static extern IntPtr LoadLibrary(string fileName);
+
+    [DllImport("kernel32", CharSet = CharSet.Ansi, SetLastError = true)]
+    private static extern IntPtr GetProcAddress(IntPtr module, string procName);
 }
 
 [StructLayout(LayoutKind.Sequential)]
