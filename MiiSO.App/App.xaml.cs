@@ -12,6 +12,9 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        // Velopack-Hooks müssen VOR allem anderen laufen (Installer-Events/Updates)
+        try { Velopack.VelopackApp.Build().Run(); } catch { }
+
         base.OnStartup(e);
 
         DispatcherUnhandledException += (_, args) =>
