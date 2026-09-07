@@ -1,0 +1,15 @@
+# Extracted APK assets (source material, not part of the theme)
+_iiSU_extracted/
+
+# Original APK archive
+iiSU-*.zip
+
+# Node / build artifacts
+node_modules/
+dist/
+release/
+out/
+
+# Logs
+*.log
+*.txt

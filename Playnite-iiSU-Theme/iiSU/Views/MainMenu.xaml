@@ -71,7 +71,9 @@
                        VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0"/>
             <TextBlock Text="{DynamicResource LOCMenuSelectRandomGame}" VerticalAlignment="Center" />
         </StackPanel>
-<DataTemplate x:Key="MainMenuShutdowButtonTemplate">
+    </DataTemplate>
+
+    <DataTemplate x:Key="MainMenuShutdowButtonTemplate">
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="&#xefc4;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24"
                        VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0"/>
@@ -169,4 +171,3 @@
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>
-    </DataTemplate>

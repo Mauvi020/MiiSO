@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <plurals name="home_rom_category_games_count">
-        <item quantity="one">%d 款游戏</item>
-        <item quantity="other">%d 款游戏</item>
-    </plurals>
-</resources>
