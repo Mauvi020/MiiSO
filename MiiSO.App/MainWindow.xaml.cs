@@ -52,6 +52,7 @@ public partial class MainWindow : Window
         switch (page)
         {
             case AppPage.Home:
+                _home.Refresh();
                 ContentHost.Content = _home;
                 PageTitleText.Text = "Start";
                 SetHint("Kanal wählen");
@@ -126,11 +127,40 @@ public partial class MainWindow : Window
             if (!string.IsNullOrWhiteSpace(game.Arguments))
                 psi.Arguments = game.Arguments;
 
-            System.Diagnostics.Process.Start(psi);
+            var proc = System.Diagnostics.Process.Start(psi);
 
             game.LastPlayed = DateTime.Now;
             game.LaunchCount++;
             App.Settings.SaveLibrary();
+
+            // Fenster minimieren, damit das Spiel im Vordergrund startet;
+            // nach dem Spielende (wenn es wirklich gelaufen ist) wiederherstellen.
+            var host = owner ?? this;
+            var wasMax = WindowState == WindowState.Maximized;
+            if (proc != null)
+            {
+                try
+                {
+                    host.WindowState = WindowState.Minimized;
+                    _ = System.Threading.Tasks.Task.Run(async () =>
+                    {
+                        try
+                        {
+                            proc.WaitForExit();
+                            // Kurzlaufende Launcher (Steam-Bootstrap etc.) ignorieren
+                            var ran = proc.ExitTime - proc.StartTime > TimeSpan.FromSeconds(20);
+                            if (!ran) return;
+                            await Dispatcher.BeginInvoke(() =>
+                            {
+                                WindowState = wasMax ? WindowState.Maximized : WindowState.Normal;
+                                Activate();
+                            });
+                        }
+                        catch { }
+                    });
+                }
+                catch { }
+            }
         }
         catch (Exception ex)
         {

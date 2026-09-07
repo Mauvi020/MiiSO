@@ -1,9 +1,11 @@
 <UserControl x:Class="MiiSO.Views.HomeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:models="clr-namespace:MiiSO.Models">
+             xmlns:models="clr-namespace:MiiSO.Models"
+             xmlns:svc="clr-namespace:MiiSO.Services">
 
     <UserControl.Resources>
+        <svc:GameCoverConverter x:Key="CoverConv" />
         <Style x:Key="ChannelItemStyle" TargetType="ListBoxItem">
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="Background" Value="Transparent" />
@@ -20,18 +22,18 @@
         </Style>
 
         <DataTemplate x:Key="ChannelTemplate" DataType="{x:Type models:ChannelItem}">
-            <Grid Width="268" Height="280" Margin="6,0">
+            <Grid Width="232" Height="236" Margin="5,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="218" />
+                    <RowDefinition Height="176" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Border x:Name="Glow" Grid.Row="0" CornerRadius="28" Margin="2" Opacity="0"
+                <Border x:Name="Glow" Grid.Row="0" CornerRadius="24" Margin="2" Opacity="0"
                         Background="{DynamicResource SelectionBrush}">
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="24" ShadowDepth="0" Opacity="0.95" Color="{DynamicResource AccentBlueColor}" />
                     </Border.Effect>
                 </Border>
-                <Border x:Name="Ch" Grid.Row="0" Margin="8" CornerRadius="24" ClipToBounds="True"
+                <Border x:Name="Ch" Grid.Row="0" Margin="7" CornerRadius="20" ClipToBounds="True"
                         Background="{DynamicResource TileBackgroundBrush}"
                         BorderBrush="#33224F96" BorderThickness="1"
                         RenderTransformOrigin="0.5,0.5">
@@ -84,6 +86,80 @@
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
+        <Style x:Key="RecentItemStyle" TargetType="ListBoxItem">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DataTemplate x:Key="RecentTileTemplate" DataType="{x:Type models:GameItem}">
+            <Grid Width="184" Margin="6,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="90" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Border x:Name="RGlow" CornerRadius="10" Margin="2,1,2,0" Opacity="0"
+                        Background="{DynamicResource SelectionBrush}">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="14" ShadowDepth="0" Opacity="0.9" Color="{DynamicResource AccentBlueColor}" />
+                    </Border.Effect>
+                </Border>
+                <Border x:Name="RCard" Grid.Row="0" Margin="5,3,5,0" CornerRadius="8" ClipToBounds="True"
+                        Background="{DynamicResource TileBackgroundBrush}"
+                        BorderBrush="#33224F96" BorderThickness="1"
+                        RenderTransformOrigin="0.5,0.5">
+                    <Border.RenderTransform>
+                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                    </Border.RenderTransform>
+                    <Image Source="{Binding CoverPath, Converter={StaticResource CoverConv}}"
+                           Stretch="UniformToFill" />
+                </Border>
+                <TextBlock Grid.Row="1" Text="{Binding Name}" Margin="5,5,5,0" TextAlignment="Center"
+                           FontFamily="{DynamicResource FontConsoleSans}" FontSize="14"
+                           Foreground="{DynamicResource TextBrush}"
+                           TextTrimming="CharacterEllipsis" />
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                             Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="RGlow" Storyboard.TargetProperty="Opacity"
+                                                 To="1" Duration="0:0:0.1" />
+                                <DoubleAnimation Storyboard.TargetName="RCard"
+                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                 To="1.06" Duration="0:0:0.1" />
+                                <DoubleAnimation Storyboard.TargetName="RCard"
+                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                 To="1.06" Duration="0:0:0.1" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="RGlow" Storyboard.TargetProperty="Opacity"
+                                                 To="0" Duration="0:0:0.1" />
+                                <DoubleAnimation Storyboard.TargetName="RCard"
+                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                 To="1" Duration="0:0:0.1" />
+                                <DoubleAnimation Storyboard.TargetName="RCard"
+                                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                 To="1" Duration="0:0:0.1" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
     </UserControl.Resources>
 
     <Grid Background="Transparent">
@@ -95,7 +171,7 @@
 
         <StackPanel Grid.Row="0" VerticalAlignment="Bottom" Margin="0,0,0,18">
             <Image Source="pack://application:,,,/Assets/Images/logo.png"
-                   MaxHeight="150" Stretch="Uniform" HorizontalAlignment="Center" />
+                   MaxHeight="64" Stretch="Uniform" HorizontalAlignment="Center" />
             <TextBlock x:Name="WelcomeText" HorizontalAlignment="Center" Margin="0,16,0,0"
                        FontFamily="{DynamicResource FontConsoleSans}" FontSize="20"
                        Foreground="{DynamicResource TextBrushDark}"
@@ -119,9 +195,29 @@
             </ListBox.ItemsPanel>
         </ListBox>
 
-        <TextBlock Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"
-                   FontFamily="{DynamicResource FontConsoleSans}" FontSize="16"
-                   Foreground="{DynamicResource TextBrushDark}"
-                   Text="Pfeiltasten wechseln · A/Enter öffnet den Kanal · F11 = Vollbild" />
+        <StackPanel Grid.Row="2" VerticalAlignment="Top" Margin="0,14,0,0">
+            <TextBlock x:Name="RecentHeader" Text="ZULETZT GESPIELT" HorizontalAlignment="Center"
+                       FontFamily="{DynamicResource FontIisu}" FontSize="17"
+                       Foreground="{DynamicResource TextBrushDark}" Margin="0,0,0,10" />
+            <ListBox x:Name="RecentList"
+                     ItemTemplate="{StaticResource RecentTileTemplate}"
+                     ItemContainerStyle="{StaticResource RecentItemStyle}"
+                     HorizontalAlignment="Center"
+                     Background="Transparent" BorderThickness="0"
+                     ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                     KeyDown="RecentList_KeyDown"
+                     PreviewMouseLeftButtonUp="RecentList_PreviewMouseLeftButtonUp">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            <TextBlock HorizontalAlignment="Center" Margin="0,14,0,0"
+                       FontFamily="{DynamicResource FontConsoleSans}" FontSize="16"
+                       Foreground="{DynamicResource TextBrushDark}"
+                       Text="Pfeiltasten wechseln · A/Enter startet · F11 = Vollbild · F2 = Spiele" />
+        </StackPanel>
     </Grid>
 </UserControl>

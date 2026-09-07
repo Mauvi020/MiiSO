@@ -50,7 +50,7 @@ public sealed class GamePadService
                     continue;
                 }
 
-                uint pressed = state.Gamepad.wButtons;
+                uint pressed = state.Gamepad.wButtons | StickButtons(state.Gamepad);
                 var now = Environment.TickCount64;
 
                 uint changed = pressed & ~last;
@@ -71,6 +71,19 @@ public sealed class GamePadService
             catch { }
             Thread.Sleep(30);
         }
+    }
+
+    private const short StickThreshold = 12000;
+
+    /// <summary>Mappt den linken Analogstick auf D-Pad-Bitmasken (inkl. Diagonalen).</summary>
+    private static uint StickButtons(XINPUT_GAMEPAD g)
+    {
+        uint b = 0;
+        if (g.sThumbLY > StickThreshold) b |= XInput.GAMEPAD_DPAD_UP;
+        if (g.sThumbLY < -StickThreshold) b |= XInput.GAMEPAD_DPAD_DOWN;
+        if (g.sThumbLX < -StickThreshold) b |= XInput.GAMEPAD_DPAD_LEFT;
+        if (g.sThumbLX > StickThreshold) b |= XInput.GAMEPAD_DPAD_RIGHT;
+        return b;
     }
 
     private static readonly (uint Mask, PadButton Button)[] Mapping =
