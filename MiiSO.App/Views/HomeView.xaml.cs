@@ -176,7 +176,7 @@ public partial class HomeView : UserControl
             case ChannelKind.Disc:
             {
                 var last = App.Settings.Library
-                    .Where(g => g.LastPlayed.HasValue)
+                    .Where(g => g.LastPlayed != default)
                     .OrderByDescending(g => g.LastPlayed)
                     .FirstOrDefault()
                     ?? App.Settings.Library.OrderByDescending(g => g.AddedAt).FirstOrDefault();
