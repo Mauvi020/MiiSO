@@ -1,0 +1,63 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    mc:Ignorable="d">
+
+    <!--
+        Game grid tile: Wii-channel style. Rounded "channel tile" with the
+        cover art inside and a translucent title band at the bottom.
+    -->
+    <Style x:Key="ListGameItemTemplate" TargetType="{x:Type GameListItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GameListItem}">
+                    <Grid>
+                        <Border x:Name="TileBackdrop"
+                                CornerRadius="12"
+                                Background="{DynamicResource ControlBackgroundBrush}"
+                                BorderBrush="{DynamicResource SelectionLightBrush}"
+                                BorderThickness="1">
+                            <Grid>
+                                <Image x:Name="PART_ImageCover"
+                                       RenderOptions.BitmapScalingMode="Fant" StretchDirection="Both"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Stretch="{Settings CoverArtStretch}"
+                                       Margin="4" />
+                                <Border Background="Transparent" x:Name="BorderDarken" Visibility="Collapsed" CornerRadius="12" />
+                            </Grid>
+                        </Border>
+
+                        <Border x:Name="TitleBand"
+                                CornerRadius="0,0,12,12"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Stretch"
+                                Background="{DynamicResource ControlBackgroundDarkBrush}"
+                                Margin="2,0,2,2"
+                                Padding="6,2,6,3">
+                            <TextBlock Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"
+                                       Visibility="{Settings Fullscreen.ShowGameTitles}"
+                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontFamily="{DynamicResource FontIisu}"
+                                       FontSize="{DynamicResource FontSizeSmall}"
+                                       HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
+                                       TextAlignment="Center" MaxLines="1" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsInstalled}" Value="False" />
+                                <Condition Binding="{Settings Fullscreen.DarkenUninstalledGamesGrid}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Visible" TargetName="BorderDarken" />
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Settings Fullscreen.ShowGameTitles}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="TitleBand" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
