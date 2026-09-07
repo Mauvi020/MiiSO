@@ -18,7 +18,7 @@ public partial class MainWindow : Window
     private readonly SettingsView _settings;
     private readonly AboutView _about;
 
-    private Page _currentPage;
+    private AppPage _currentPage;
     private bool _fullscreen;
 
     public MainWindow()
@@ -38,43 +38,43 @@ public partial class MainWindow : Window
 
         App.GamePad.ButtonPressed += OnPadButton;
         Loaded += (_, _) => ApplyDots();
-        Navigate(Page.Home);
+        Navigate(AppPage.Home);
     }
 
-    public Page CurrentPage => _currentPage;
+    public AppPage CurrentPage => _currentPage;
 
     // ---------------------------------------------------------------
     // Navigation
     // ---------------------------------------------------------------
-    public void Navigate(Page page, GameItem? game = null)
+    public void Navigate(AppPage page, GameItem? game = null)
     {
         _currentPage = page;
         switch (page)
         {
-            case Page.Home:
+            case AppPage.Home:
                 ContentHost.Content = _home;
                 PageTitleText.Text = "Start";
                 SetHint("Kanal wählen");
                 break;
-            case Page.Games:
+            case AppPage.Games:
                 _games.Refresh();
                 ContentHost.Content = _games;
                 PageTitleText.Text = "Spiele";
                 SetHint("Details öffnen");
                 break;
-            case Page.Details:
+            case AppPage.Details:
                 _details.SetGame(game ?? _games.SelectedGame);
                 ContentHost.Content = _details;
                 PageTitleText.Text = _details.Game?.Name ?? "Details";
                 SetHint("Starten");
                 break;
-            case Page.Settings:
+            case AppPage.Settings:
                 _settings.Refresh();
                 ContentHost.Content = _settings;
                 PageTitleText.Text = "Einstellungen";
                 SetHint("Auswählen");
                 break;
-            case Page.About:
+            case AppPage.About:
                 ContentHost.Content = _about;
                 PageTitleText.Text = "MiiSO";
                 SetHint("");
@@ -83,15 +83,15 @@ public partial class MainWindow : Window
         FocusInitial(page);
     }
 
-    private void FocusInitial(Page page)
+    private void FocusInitial(AppPage page)
     {
         switch (page)
         {
-            case Page.Home: _home.FocusInitial(); break;
-            case Page.Games: _games.FocusInitial(); break;
-            case Page.Details: _details.FocusInitial(); break;
-            case Page.Settings: _settings.FocusInitial(); break;
-            case Page.About: _about.FocusInitial(); break;
+            case AppPage.Home: _home.FocusInitial(); break;
+            case AppPage.Games: _games.FocusInitial(); break;
+            case AppPage.Details: _details.FocusInitial(); break;
+            case AppPage.Settings: _settings.FocusInitial(); break;
+            case AppPage.About: _about.FocusInitial(); break;
         }
     }
 
@@ -101,11 +101,11 @@ public partial class MainWindow : Window
     {
         switch (_currentPage)
         {
-            case Page.Details: Navigate(Page.Games); break;
-            case Page.Games:
-            case Page.Settings:
-            case Page.About: Navigate(Page.Home); break;
-            case Page.Home: break;
+            case AppPage.Details: Navigate(AppPage.Games); break;
+            case AppPage.Games:
+            case AppPage.Settings:
+            case AppPage.About: Navigate(AppPage.Home); break;
+            case AppPage.Home: break;
         }
     }
 
@@ -167,15 +167,15 @@ public partial class MainWindow : Window
                 e.Handled = true;
                 break;
             case Key.F1:
-                Navigate(Page.Home);
+                Navigate(AppPage.Home);
                 e.Handled = true;
                 break;
             case Key.F2:
-                Navigate(Page.Games);
+                Navigate(AppPage.Games);
                 e.Handled = true;
                 break;
             case Key.F3:
-                Navigate(Page.Settings);
+                Navigate(AppPage.Settings);
                 e.Handled = true;
                 break;
         }
@@ -199,10 +199,10 @@ public partial class MainWindow : Window
                 ToggleFullscreen();
                 break;
             case PadButton.Back:
-                Navigate(Page.Home);
+                Navigate(AppPage.Home);
                 break;
-            case PadButton.LeftBumper: Navigate(Page.Home); break;
-            case PadButton.RightBumper: Navigate(Page.Games); break;
+            case PadButton.LeftBumper: Navigate(AppPage.Home); break;
+            case PadButton.RightBumper: Navigate(AppPage.Games); break;
         }
     }
 
@@ -236,5 +236,4 @@ public partial class MainWindow : Window
     {
         DotsOverlay.Opacity = App.Settings.Data.ShowDots ? 0.16 : 0.0;
     }
-}
 }

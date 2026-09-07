@@ -28,7 +28,7 @@
                 <Border x:Name="Glow" Grid.Row="0" CornerRadius="28" Margin="2" Opacity="0"
                         Background="{DynamicResource SelectionBrush}">
                     <Border.Effect>
-                        <DropShadowEffect BlurRadius="24" ShadowDepth="0" Opacity="0.95" Color="#FF4F8CFF" />
+                        <DropShadowEffect BlurRadius="24" ShadowDepth="0" Opacity="0.95" Color="{DynamicResource AccentBlueColor}" />
                     </Border.Effect>
                 </Border>
                 <Border x:Name="Ch" Grid.Row="0" Margin="8" CornerRadius="24" ClipToBounds="True"

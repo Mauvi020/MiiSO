@@ -13,3 +13,8 @@ out/
 # Logs
 *.log
 *.txt
+
+# .NET build output
+bin/
+obj/
+.vs/

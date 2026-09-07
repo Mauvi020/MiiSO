@@ -23,7 +23,11 @@ public partial class AboutView : UserControl
     {
         try
         {
-            System.Diagnostics.Process.Start("https://github.com/Mauvi020/MiiSO");
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "https://github.com/Mauvi020/MiiSO",
+                UseShellExecute = true,
+            });
         }
         catch
         {
@@ -34,6 +38,6 @@ public partial class AboutView : UserControl
 
     private void Back_Clicked(object sender, RoutedEventArgs e)
     {
-        _owner.Navigate(MiiSO.Models.Page.Home);
+        _owner.Navigate(MiiSO.Models.AppPage.Home);
     }
 }

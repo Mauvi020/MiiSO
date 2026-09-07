@@ -33,7 +33,7 @@ public partial class GameDetailsView : UserControl
         HeroImage.Source = cover;
 
         DescText.Text = string.IsNullOrWhiteSpace(game.Description)
-            ? "Keine Beschreibung gefunden. Lege eine „description.txt" neben dem Spiel ab – sie erscheint hier automatisch."
+            ? "Keine Beschreibung gefunden. Lege eine „description.txt“ neben dem Spiel ab – sie erscheint hier automatisch."
             : game.Description;
 
         var meta = game.LaunchCount + "x gestartet";

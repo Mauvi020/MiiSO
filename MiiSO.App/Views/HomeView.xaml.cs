@@ -28,28 +28,28 @@ public partial class HomeView : UserControl
                 Title = "Start",
                 IconUri = Img("home.png"),
                 IconSelectedUri = Img("home_selected.png"),
-                Target = Page.Home,
+                Target = AppPage.Home,
             },
             new ChannelItem
             {
                 Title = "Spiele",
                 IconUri = Img("rom.png"),
                 IconSelectedUri = Img("rom_selected.png"),
-                Target = Page.Games,
+                Target = AppPage.Games,
             },
             new ChannelItem
             {
                 Title = "Retro",
                 IconUri = Img("retro.png"),
                 IconSelectedUri = Img("retro_selected.png"),
-                Target = Page.About,
+                Target = AppPage.Games,
             },
             new ChannelItem
             {
                 Title = "Apps",
                 IconUri = Img("apps.png"),
                 IconSelectedUri = Img("apps_selected.png"),
-                Target = Page.Settings,
+                Target = AppPage.Settings,
             },
         };
     }

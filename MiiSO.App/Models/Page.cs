@@ -1,6 +1,6 @@
 namespace MiiSO.Models;
 
-public enum Page
+public enum AppPage
 {
     Home,
     Games,

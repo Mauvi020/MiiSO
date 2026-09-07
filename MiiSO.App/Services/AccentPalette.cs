@@ -24,3 +24,6 @@ public static class AccentPalette
         res["AccentVioletColor"] = violet;
     }
 }
+
+/// <summary>Bind-freundliches View-Model für den Akzent-Picker.</summary>
+public sealed record AccentOption(int Index, Color Blue, Color Violet, string Name);

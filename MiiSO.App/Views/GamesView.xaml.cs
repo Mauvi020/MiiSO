@@ -66,11 +66,11 @@ public partial class GamesView : UserControl
     private void OpenSelected()
     {
         if (GamesList.SelectedItem is GameItem game)
-            _owner.Navigate(Page.Details, game);
+            _owner.Navigate(AppPage.Details, game);
     }
 
     private void AddFolder_Clicked(object sender, RoutedEventArgs e)
     {
-        _owner.Navigate(Page.Settings);
+        _owner.Navigate(AppPage.Settings);
     }
 }
