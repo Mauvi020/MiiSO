@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiiSO — Der ultimative Game Launcher</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome für Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Hintergrund-Glow Effekte */
+        .glow-bg {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            filter: blur(150px);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.15;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Header / Navbar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        /* Hero Sektion */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            max-width: 900px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .badge i {
+            color: #22c55e;
+            font-size: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .cta-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #fff;
+            color: #000;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary:hover {
+            background-color: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Features / Info Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            width: 90%;
+            margin: 60px auto 40px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 16px;
+            text-align: left;
+            backdrop-filter: blur(10px);
+            transition: border-color 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-card i {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-bg"></div>
+
+    <!-- Navbar -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-gamepad" style="color: var(--accent);"></i> MiiSO
+        </div>
+        <div class="nav-links">
+            <a href="https://github.com/Mauvi020/MiiSO" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+            <a href="https://discord.gg/RxmZaA4Vjz" target="_blank"><i class="fa-brands fa-discord"></i> Discord</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="badge">
+            <i class="fa-solid fa-circle"></i> Open Source Game Launcher
+        </div>
+        
+        <h1>Dein Hub für Games. <br><span>Einfach. Schnell. MiiSO.</span></h1>
+        
+        <p class="subtitle">
+            MiiSO ist ein moderner, performanter Open-Source-Game-Launcher, der deine Spiele an einem Ort bündelt. Entwickelt für Gamer, die Wert auf Design und Performance legen.
+        </p>
+
+        <div class="cta-container">
+            <a href="https://github.com/Mauvi020/MiiSO" target="_blank" class="btn btn-primary">
+                <i class="fa-brands fa-github"></i> Zum GitHub Repo
+            </a>
+            <a href="https://discord.gg/RxmZaA4Vjz" target="_blank" class="btn btn-secondary">
+                <i class="fa-brands fa-discord"></i> Discord beitreten
+            </a>
+        </div>
+    </main>
+
+    <!-- Features Section -->
+    <div class="features">
+        <div class="feature-card">
+            <i class="fa-solid fa-bolt"></i>
+            <h3>Blitzschnell</h3>
+            <p>Entwickelt für minimale Ladezeiten und maximale Systemressourcen für deine Spiele.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-code-merge"></i>
+            <h3>Open Source</h3>
+            <p>Vollständigseigener Code, transparent auf GitHub. Trage gerne zur Weiterentwicklung bei!</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-users"></i>
+            <h3>Aktive Community</h3>
+            <p>Tausche dich auf unserem Discord-Server mit anderen aus, melde Bugs oder schlage Features vor.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 MiiSO Launcher. Alle Rechte vorbehalten. Erstellt für <a href="https://github.com/Mauvi020/MiiSO" target="_blank" style="color: var(--text-main); text-decoration: none;">Mauvi020</a>.</p>
+    </footer>
+
+</body>
+</html>
