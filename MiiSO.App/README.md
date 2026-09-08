@@ -25,8 +25,21 @@ MiiSO.App\bin\Release\net10.0-windows\MiiSO.exe
 
 ```powershell
 .\publish.ps1
-# -> release\MiiSO\MiiSO.exe  (~66 MB, win-x64, self-contained)
+# -> release\MiiSO\MiiSO.exe  (~64 MB, win-x64, self-contained)
 ```
+
+## Installer (Setup-EXE, per-user, keine Admin-Rechte)
+
+```powershell
+.\installer.ps1   # einmalig vorher: dotnet tool install --global vpk
+# -> release\Installer\MiiSO-win-Setup.exe
+```
+
+Der Installer (Velopack) installiert nach `%LocalAppData%\MiiSO`, legt
+Startmenü-Shortcut + Eintrag unter **Windows-Einstellungen › Apps** an und
+unterstützt künftige Delta-Updates (App enthält den `VelopackApp`-Hook).
+Silent-Modus: `MiiSO-win-Setup.exe --silent` · Deinstallation über die
+Windows-Einstellungen oder `%LocalAppData%\MiiSO\Update.exe --uninstall`.
 
 ## Projektstruktur
 
