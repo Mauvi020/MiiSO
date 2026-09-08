@@ -170,8 +170,8 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" VerticalAlignment="Bottom" Margin="0,0,0,18">
-            <Image Source="pack://application:,,,/Assets/Images/logo.png"
-                   MaxHeight="64" Stretch="Uniform" HorizontalAlignment="Center" />
+            <Image Source="pack://application:,,,/Assets/Images/logo_wordmark.png"
+                   MaxHeight="56" Stretch="Uniform" HorizontalAlignment="Center" />
             <TextBlock x:Name="WelcomeText" HorizontalAlignment="Center" Margin="0,16,0,0"
                        FontFamily="{DynamicResource FontConsoleSans}" FontSize="20"
                        Foreground="{DynamicResource TextBrushDark}"

@@ -14,7 +14,7 @@
             <TextBlock HorizontalAlignment="Center" Margin="0,22,0,0"
                        FontFamily="{DynamicResource FontIisu}" FontSize="42"
                        Foreground="{DynamicResource TextBrush}"
-                       Text="MiiSO v1.0.0" />
+                       Text="MiiSO v1.0.1" />
             <TextBlock x:Name="AboutText" Margin="0,18,0,0" TextAlignment="Center" TextWrapping="Wrap"
                        FontFamily="{DynamicResource FontConsoleSans}" FontSize="19" LineHeight="28"
                        Foreground="{DynamicResource TextBrushDark}"

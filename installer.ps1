@@ -5,7 +5,7 @@ $ErrorActionPreference = 'Stop'
 $project = Join-Path $PSScriptRoot 'MiiSO.App\MiiSO.App.csproj'
 $pubDir  = Join-Path $PSScriptRoot 'release\MiiSO'
 $outDir  = Join-Path $PSScriptRoot 'release\Installer'
-$version = '1.0.0'
+$version = '1.0.1'
 
 # 1) App als selbstenthaltende Single-File-EXE publishen
 dotnet publish $project -c Release -r win-x64 --self-contained true `
